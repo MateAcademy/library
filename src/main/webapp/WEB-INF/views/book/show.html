@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Info for one book</title>
+</head>
+<body>
+
+    <h2>Show this book:</h2>
+
+    <!-- Виведення даних про одну книгу -->
+    <div>
+        <p><strong>Id:</strong> <span th:text="${book.getId()}"></span></p>
+        <p><strong>Name:</strong> <span th:text="${book.getName()}"></span></p>
+        <p><strong>Description:</strong> <span th:text="${book.getDescription()}"></span></p>
+        <hr/>
+        <a href="/book/" >Show all book</a>
+        <br>
+        <a th:href="@{/book/{id}/edit(id=${book.getId()})}">Edite this book</a>
+        <p> <form th:action="@{/book/{id}(id=${book.getId()})}" th:method="delete"
+                  onsubmit="return confirm('Are you sure you want to delete this book?')">
+        <button type="submit">delete</button>
+    </form></p>
+    </div>
+
+    <br>
+    <a href="/">Main page</a>
+
+</body>
+</html>

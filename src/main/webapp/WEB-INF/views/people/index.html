@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>All people</title>
+</head>
+<body>
+
+    <h1>List people:</h1>
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Id:</th>
+            <th>First Name:</th>
+            <th>Last Name:</th>
+            <th>Patronymic:</th>
+            <th>Age:</th>
+            <th>Email:</th>
+            <th>Address:</th>
+            <th>Update:</th>
+            <th>Delete:</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Виведення даних про людей зі списку -->
+        <tr th:each="person : ${people}">
+            <td th:text="${person.getId()}"></td>
+            <td th:text="${person.getFirstName()}"></td>
+            <td th:text="${person.getLastName()}"></td>
+            <td th:text="${person.getPatronymic()}"></td>
+            <td th:text="${person.getAge()}"></td>
+            <td th:text="${person.getEmail()}"></td>
+            <td th:text="${person.getAddress()}"></td>
+            <td><a th:href="@{/people/{id}/edit(id=${person.getId()})}" th:text="update"></a></td>
+<!--            <td ><a th:method="delete" th:href="@{/people/{id}(id=${person.getId()})}" th:text="delete"></a></td>-->
+            <td>
+                <form th:action="@{/people/{id}(id=${person.getId()})}" th:method="delete"
+                      onsubmit="return confirm('Are you sure you want to delete the user?')">
+                    <button type="submit">delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br/>
+
+    <a href="/">Main page</a>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>All books</title>
+</head>
+<body>
+
+    <h1>List books:</h1>
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Id:</th>
+            <th>Name:</th>
+            <th>Description:</th>
+            <th>Update:</th>
+            <th>Delete:</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Виведення даних про людей зі списку -->
+        <tr th:each="book : ${books}">
+            <td th:text="${book.getId()}"></td>
+            <td th:text="${book.getName()}"></td>
+            <td th:text="${book.getDescription()}"></td>
+            <td><a th:href="@{/book/{id}/edit(id=${book.getId()})}" th:text="update"></a></td>
+            <td>
+                <form th:action="@{/book/{id}(id=${book.getId()})}" th:method="delete"
+                      onsubmit="return confirm('Are you sure you want to delete the book?')">
+                    <button type="submit">delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <br/>
+
+    <a href="/">Main page</a>
+
+<!--<div th:each="person : ${people}">-->
+<!--    <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getId()}"> id</a>-->
+<!--    <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getName()}"> name</a>-->
+<!--    <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getSurname()}"> surname</a>-->
+<!--    <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getEmail()}"> email</a>-->
+<!--</div>-->
+
+</body>
+</html>
