@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -9,18 +9,20 @@
 </head>
 <body>
 
-    <h2>Show this book:</h2>
+    <h2>Show one/this book:</h2>
 
     <!-- Виведення даних про одну книгу -->
     <div>
-        <p><strong>Id:</strong> <span th:text="${book.getId()}"></span></p>
-        <p><strong>Name:</strong> <span th:text="${book.getName()}"></span></p>
-        <p><strong>Description:</strong> <span th:text="${book.getDescription()}"></span></p>
+        <p><strong>Book Id:</strong> <span th:text="${book.getBookId()}"></span></p>
+        <p><strong>Person Id:</strong> <span th:text="${book.getPersonId()}"></span></p>
+        <p><strong>Book Name:</strong> <span th:text="${book.getNameBook()}"></span></p>
+        <p><strong>Author:</strong> <span th:text="${book.getAuthor()}"></span></p>
+        <p><strong>Year:</strong> <span th:text="${book.getYear()}"></span></p>
         <hr/>
         <a href="/book/" >Show all book</a>
         <br>
-        <a th:href="@{/book/{id}/edit(id=${book.getId()})}">Edite this book</a>
-        <p> <form th:action="@{/book/{id}(id=${book.getId()})}" th:method="delete"
+        <a th:href="@{/book/{id}/edit(id=${book.getBookId()})}">Edite this book</a>
+        <p> <form th:action="@{/book/{id}(id=${book.getBookId()})}" th:method="delete"
                   onsubmit="return confirm('Are you sure you want to delete this book?')">
         <button type="submit">delete</button>
     </form></p>

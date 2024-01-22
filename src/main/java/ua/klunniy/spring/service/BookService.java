@@ -23,7 +23,7 @@ public class BookService {
         return bookDAO.index();
     }
 
-    public Book show(int id) {
+    public Book show(long id) {
         return bookDAO.show(id);
     }
 
@@ -37,7 +37,7 @@ public class BookService {
         }
     }
 
-    public void update(int id, Book book) {
+    public void update(long id, Book book) {
         if (book != null) {
             bookDAO.update(id, book);
         }

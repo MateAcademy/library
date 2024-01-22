@@ -29,7 +29,7 @@ public class BookValidator implements Validator {
     public void validate(Object target, Errors errors) {
 
         Book book = (Book) target;
-        String bookName = book.getName();
+        String bookName = book.getNameBook();
 
         if (bookService.show(bookName) != null) {
             errors.rejectValue("name", "", "In db is present such book name");

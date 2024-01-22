@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -15,8 +15,10 @@
         <thead>
         <tr>
             <th>Id:</th>
-            <th>Name:</th>
-            <th>Description:</th>
+            <th>Person Id:</th>
+            <th>Name Book:</th>
+            <th>Author:</th>
+            <th>Year:</th>
             <th>Update:</th>
             <th>Delete:</th>
         </tr>
@@ -24,12 +26,14 @@
         <tbody>
         <!-- Виведення даних про людей зі списку -->
         <tr th:each="book : ${books}">
-            <td th:text="${book.getId()}"></td>
-            <td th:text="${book.getName()}"></td>
-            <td th:text="${book.getDescription()}"></td>
-            <td><a th:href="@{/book/{id}/edit(id=${book.getId()})}" th:text="update"></a></td>
+            <td th:text="${book.getBookId()}"></td>
+            <td th:text="${book.getPersonId()}"></td>
+            <td th:text="${book.getNameBook()}"></td>
+            <td th:text="${book.getAuthor()}"></td>
+            <td th:text="${book.getYear()}"></td>
+            <td><a th:href="@{/book/{id}/edit(id=${book.getBookId()})}" th:text="update"></a></td>
             <td>
-                <form th:action="@{/book/{id}(id=${book.getId()})}" th:method="delete"
+                <form th:action="@{/book/{id}(id=${book.getBookId()})}" th:method="delete"
                       onsubmit="return confirm('Are you sure you want to delete the book?')">
                     <button type="submit">delete</button>
                 </form>
@@ -41,13 +45,6 @@
     <br/>
 
     <a href="/">Main page</a>
-
-<!--<div th:each="person : ${people}">-->
-<!--    <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getId()}"> id</a>-->
-<!--    <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getName()}"> name</a>-->
-<!--    <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getSurname()}"> surname</a>-->
-<!--    <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getEmail()}"> email</a>-->
-<!--</div>-->
 
 </body>
 </html>

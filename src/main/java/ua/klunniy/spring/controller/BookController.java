@@ -46,7 +46,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public String showBookById(@PathVariable("id") int id, Model model) {
+    public String showBookById(@PathVariable("id") long id, Model model) {
         model.addAttribute("book", bookService.show(id));
         return "/book/show";
     }
@@ -70,7 +70,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editBook(Model model, @PathVariable("id") int id) {
+    public String editBook(Model model, @PathVariable("id") long id) {
         model.addAttribute("book", bookService.show(id));
         return "/book/edit";
     }
@@ -78,7 +78,7 @@ public class BookController {
     @PatchMapping("/{id}")
     public String updateBook(@ModelAttribute("book") @Valid Book book,
                              BindingResult bindingResult,
-                             @PathVariable("id") int id) {
+                             @PathVariable("id") long id) {
         bookValidator.validate(book, bindingResult);
 
         if (bindingResult.hasErrors()) {

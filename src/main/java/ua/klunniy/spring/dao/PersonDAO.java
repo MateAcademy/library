@@ -16,28 +16,7 @@ import java.util.*;
  */
 @Component
 public class PersonDAO {
-
     private final JdbcTemplate jdbcTemplate;
-
-    private static final String URL = "jdbc:postgresql://localhost:5432/zero_db";
-    private static final String USERNAME = "postgres";
-    private static final String PASSWORD = "test";
-
-    private static final Connection connection;
-
-    static {
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Autowired
     public PersonDAO(JdbcTemplate jdbcTemplate) {
@@ -82,47 +61,15 @@ public class PersonDAO {
         person.setId(generatedId.longValue());
     }
 
-//    public void save(Person person) {
-//        final String sql = "INSERT INTO PERSON (name, surname, age, email) values (?, ?, ?, ?) RETURNING id";
-//        try (Connection connection = dbConnector.getConnection();
-//             PreparedStatement ps = connection.prepareStatement(sql)) {
-//            ps.setString(1, person.getName());
-//            ps.setString(2, person.getSurname());
-//            ps.setInt(3, person.getAge());
-//            ps.setString(4, person.getEmail());
-//
-//            ResultSet resultSet = ps.executeQuery();
-//            if (resultSet.next()) {
-//                person.setId(resultSet.getInt("id"));
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     public void update(int id, Person updatePerson) {
-//        String SQL = "UPDATE Person SET name=?, surname=?, age=?, email=?, address=? where id=?";
-//        try (PreparedStatement ps = connection.prepareStatement(SQL)) {
-//            ps.setString(1, updatePerson.getName());
-//            ps.setString(2, updatePerson.getSurname());
-//            ps.setInt(3, updatePerson.getAge());
-//            ps.setString(4, updatePerson.getEmail());
-//            ps.setString(5, updatePerson.getAddress());
-//            ps.setInt(6, id);
-//            ps.executeUpdate();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
+        jdbcTemplate.update("UPDATE Person SET first_name=?, last_name=?, patronymic=?, age=?, email=?, address=? " +
+                        "where person_id=?",
+                updatePerson.getFirstName(), updatePerson.getLastName(), updatePerson.getPatronymic(),
+                updatePerson.getAge(), updatePerson.getEmail(), updatePerson.getAddress(), id);
     }
 
     public void delete(int id) {
-        String SQL = "DELETE  from Person where id=?";
-        try (PreparedStatement ps = connection.prepareStatement(SQL)) {
-            ps.setInt(1, id);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        jdbcTemplate.update("DELETE from Person where person_id=?", id);
     }
 
 }

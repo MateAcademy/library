@@ -3,7 +3,6 @@ package ua.klunniy.spring.dao;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
@@ -30,41 +29,43 @@ public class BookDAO {
     }
 
     public List<Book> index() {
-        return jdbcTemplate.query("SELECT * from Book", new BeanPropertyRowMapper<>(Book.class));
+//        return jdbcTemplate.query("SELECT * from Book", new BeanPropertyRowMapper<>(Book.class));
+        return jdbcTemplate.query("SELECT * from Book", new BookRowMapper());
     }
 
-    public Book show(int id) {
-        return jdbcTemplate.query("SELECT * from Book where id=?", new Object[]{id},
+    public Book show(long id) {
+        return jdbcTemplate.query("SELECT * from Book where book_id=?", new Object[]{id},
                         new BookRowMapper())
                 .stream().findAny().orElse(null);
     }
 
     public Optional<Book> show(String name) {
-        return jdbcTemplate.query("SELECT * from Book where name=?", new Object[]{name}, new BookRowMapper())
+        return jdbcTemplate.query("SELECT * from Book where name_book=?", new Object[]{name}, new BookRowMapper())
                 .stream().findAny();
     }
 
     public void save(Book book) {
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("book")
-                .usingGeneratedKeyColumns("id");
+                .usingGeneratedKeyColumns("book_id");
 
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("name", book.getName());
-        parameters.put("description", book.getDescription());
+        parameters.put("name_book", book.getNameBook());
+        parameters.put("author", book.getAuthor());
+        parameters.put("year", book.getYear());
 
         Number generatedId = simpleJdbcInsert.executeAndReturnKey(parameters);
 
-        book.setId(generatedId.intValue());
+        book.setBookId(generatedId.longValue());
     }
 
-    public void update(int id, Book updateBook) {
-        jdbcTemplate.update("UPDATE Book SET name=?, description=? where id=?",
-                updateBook.getName(), updateBook.getDescription(), id);
+    public void update(long id, Book updateBook) {
+        jdbcTemplate.update("UPDATE Book SET name_book=?, author=?, year=? where book_id=?",
+                updateBook.getNameBook(), updateBook.getAuthor(), updateBook.getYear(), id);
     }
 
     public void delete(int id) {
-        jdbcTemplate.update("DELETE from Book where id=?", id);
+        jdbcTemplate.update("DELETE from Book where book_id=?", id);
     }
 
 }

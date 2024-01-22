@@ -12,10 +12,13 @@ public class BookRowMapper implements RowMapper<Book> {
     @Override
     public Book mapRow(ResultSet resultSet, int i) throws SQLException {
         Book book = new Book(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name"),
-                        resultSet.getString("description")
-                );
+                resultSet.getLong("book_id"),
+                resultSet.getLong("person_id"),
+                resultSet.getString("name_book"),
+                resultSet.getString("author"),
+                resultSet.getInt("year")
+        );
+
         return book;
     }
 }
