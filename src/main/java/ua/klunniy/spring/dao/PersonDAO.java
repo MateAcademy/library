@@ -3,14 +3,13 @@ package ua.klunniy.spring.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
 import ua.klunniy.spring.models.Person;
 import ua.klunniy.spring.models.PersonRowMapper;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author Serhii Klunniy
@@ -65,37 +64,22 @@ public class PersonDAO {
     }
 
     public void save(Person person) {
-//        String SQL = "INSERT into Person(name, surname, age, email) VALUES ('" + person.getName() + "','" +
-//        person.getSurname() +
-//                "'," + person.getAge() + ",'" + person.getEmail() + "')";
-//        String SQL = "INSERT into Person(name, surname, age, email, address) VALUES (?,?,?,?,?)";
-//        try (PreparedStatement ps = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS)) {
-//            ps.setString(1, person.getName());
-//            ps.setString(2, person.getSurname());
-//            ps.setInt(3, person.getAge());
-//            ps.setString(4, person.getEmail());
-//            ps.setString(5, person.getAddress());
-//
-//            int affectedRows = ps.executeUpdate();
-//
-//            if (affectedRows > 0) {
-//                // Получение сгенерированных ключей
-//                try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
-//                    if (generatedKeys.next()) {
-//                        int id = generatedKeys.getInt(1);
-//                        person.setId(id);
-//                        System.out.println("Запись успешно вставлена. ID: " + id);
-//                    } else {
-//                        System.out.println("Не удалось получить ID записи.");
-//                    }
-//                }
-//            } else {
-//                System.out.println("Не удалось вставить запись.");
-//            }
-//            //PeopleStorage.save(person);
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
+        SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
+                .withTableName("person")
+                .usingGeneratedKeyColumns("person_id");
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("first_name", person.getFirstName());
+        parameters.put("last_name", person.getLastName());
+        parameters.put("patronymic", person.getPatronymic());
+        parameters.put("age", person.getAge());
+        parameters.put("email", person.getEmail());
+        parameters.put("address", person.getAddress());
+
+
+        Number generatedId = simpleJdbcInsert.executeAndReturnKey(parameters);
+
+        person.setId(generatedId.longValue());
     }
 
 //    public void save(Person person) {
