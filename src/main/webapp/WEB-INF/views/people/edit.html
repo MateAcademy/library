@@ -1,42 +1,58 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Edit person</title>
+    <style>
+        .h1 {
+            text-align: center;
+            font-size: 30px;
+        }
+
+        .h2 {
+            text-align: center;
+            font-size: 20px;
+        }
+    </style>
 </head>
 <body>
 
-<form th:method="patch" th:action="@{/people/{id}(id=${person.getId()})}" th:object="${person}">
-    <!--            <input type="hidden" name="_method" value="patch">-->
-    <label for="firstName">FirstName</label>
-    <input type="text" th:field="*{firstName}" id="firstName"/>
-    <div style="color:red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">FirstName error</div>
-    <br>
-    <label for="lastName">LastName</label>
-    <input type="text" th:field="*{lastName}" id="lastName"/>
-    <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Surname error</div>
-    <br>
-    <label for="patronymic">patronymic</label>
-    <input type="text" th:field="*{patronymic}" id="patronymic"/>
-    <div style="color:red" th:if="${#fields.hasErrors('patronymic')}" th:errors="*{patronymic}">Patronymic error</div>
-    <br>
-    <label for="age">age</label>
-    <input type="text" th:field="*{age}" id="age"/>
-    <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age error</div>
-    <br>
-    <label for="email">Email</label>
-    <input type="text" th:field="*{email}" id="email"/>
-    <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>
-    <br>
-    <label for="address">Address</label>
-    <input type="text" th:field="*{address}" id="address"/>
-    <div style="color:red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address error</div>
-    <br>
-    <input type="submit" value="Update Person"/>
-</form>
+<h1 class="h1">Страница изменения человека</h1>
+<h1 class="h1">/people/{id}/edit</h1>
 
-<br>
-<a href="/">Main page</a>
+    <form th:class="h1" th:method="patch" th:action="@{/people/{id}(id=${person.getId()})}" th:object="${person}">
+        <!--            <input type="hidden" name="_method" value="patch">-->
+        <label for="firstName">FirstName</label>
+        <input type="text" th:field="*{firstName}" id="firstName"/>
+        <div style="color:red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">FirstName error</div>
+        <br>
+        <label for="lastName">LastName</label>
+        <input type="text" th:field="*{lastName}" id="lastName"/>
+        <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Surname error</div>
+        <br>
+        <label for="patronymic">patronymic</label>
+        <input type="text" th:field="*{patronymic}" id="patronymic"/>
+        <div style="color:red" th:if="${#fields.hasErrors('patronymic')}" th:errors="*{patronymic}">Patronymic error</div>
+        <br>
+        <label for="age">age</label>
+        <input type="text" th:field="*{age}" id="age"/>
+        <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age error</div>
+        <br>
+        <label for="email">Email</label>
+        <input type="text" th:field="*{email}" id="email"/>
+        <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email error</div>
+        <br>
+        <label for="address">Address</label>
+        <input type="text" th:field="*{address}" id="address"/>
+        <div style="color:red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address error</div>
+        <br>
+        <input type="submit" value="Редактировать!"/>
+    </form>
+
+    <br/>
+    <hr/>
+    <h2 class="h2"><a href="/">Main page</a></h2>
+
 
 </body>
 </html>

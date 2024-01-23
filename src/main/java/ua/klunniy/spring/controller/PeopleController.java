@@ -60,7 +60,6 @@ public class PeopleController {
         return "/people/new";
     }
 
-
     @PostMapping("/new")
     public String createPerson(@ModelAttribute("person") @Valid Person person,
                                BindingResult bindingResult) {

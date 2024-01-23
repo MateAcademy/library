@@ -42,6 +42,7 @@ public class PersonValidator implements Validator {
                 errors.rejectValue("address", "", "Error, this address is present in database");
             }
         } else {
+//проверку сделать на длину емейла
             if ((personService.showByEmail(person.getEmail()).isPresent())) {
                 errors.rejectValue("email", "", "Error, this email is present in database");
             }
