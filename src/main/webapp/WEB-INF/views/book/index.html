@@ -14,7 +14,7 @@
     <table border="1">
         <thead>
         <tr>
-            <th>Id:</th>
+            <th>Book Id:</th>
             <th>Person Id:</th>
             <th>Name Book:</th>
             <th>Author:</th>
@@ -24,13 +24,15 @@
         </tr>
         </thead>
         <tbody>
-        <!-- Виведення даних про людей зі списку -->
         <tr th:each="book : ${books}">
             <td th:text="${book.getBookId()}"></td>
             <td th:text="${book.getPersonId()}"></td>
-            <td th:text="${book.getNameBook()}"></td>
-            <td th:text="${book.getAuthor()}"></td>
-            <td th:text="${book.getYear()}"></td>
+            <!--     <td th:text="${book.getNameBook()}"></td> -->
+            <td><a th:href="@{/book/{id}(id=${book.getBookId()})}" th:text="${book.getNameBook()}"></a></td>
+            <!-- <td th:text="${book.getAuthor()}"></td> -->
+            <td><a th:href="@{/book/{id}(id=${book.getBookId()})}" th:text="${book.getAuthor()}"></a></td>
+            <!--<td th:text="${book.getYear()}"></td> -->
+            <td><a th:href="@{/book/{id}(id=${book.getBookId()})}" th:text="${book.getYear()}"></a></td>
             <td><a th:href="@{/book/{id}/edit(id=${book.getBookId()})}" th:text="update"></a></td>
             <td>
                 <form th:action="@{/book/{id}(id=${book.getBookId()})}" th:method="delete"

@@ -11,6 +11,9 @@ import java.sql.SQLException;
 public class BookRowMapper implements RowMapper<Book> {
     @Override
     public Book mapRow(ResultSet resultSet, int i) throws SQLException {
+
+        Long person_id= resultSet.getLong("person_id");
+
         Book book = new Book(
                 resultSet.getLong("book_id"),
                 resultSet.getLong("person_id"),
@@ -19,6 +22,11 @@ public class BookRowMapper implements RowMapper<Book> {
                 resultSet.getInt("year")
         );
 
+        if (person_id == 0) {
+            book.setPersonId(null);
+        }
+
         return book;
     }
+
 }

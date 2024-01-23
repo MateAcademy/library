@@ -30,8 +30,10 @@ public class BookValidator implements Validator {
 
         Book book = (Book) target;
         String bookName = book.getNameBook();
+        String author = book.getAuthor();
+        int year = book.getYear();
 
-        if (bookService.show(bookName) != null) {
+        if (bookService.show(bookName, author, year) != null) {
             errors.rejectValue("name", "", "In db is present such book name");
         }
 

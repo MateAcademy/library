@@ -85,6 +85,7 @@ public class BookController {
             return "/book/edit";
         }
 
+        book.setBookId(id);
         bookService.update(id, book);
         return "/book/show";
     }

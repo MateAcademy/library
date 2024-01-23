@@ -27,7 +27,6 @@ import java.util.Objects;
 @ComponentScan("ua.klunniy.spring")
 @PropertySource("classpath:database.properties")
 public class SpringConfig implements WebMvcConfigurer {
-
     private final ApplicationContext applicationContext;
     private final Environment environment;
 

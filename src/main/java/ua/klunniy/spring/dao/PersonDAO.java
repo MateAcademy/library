@@ -24,7 +24,7 @@ public class PersonDAO {
     }
 
     public List<Person> index() {
-        return jdbcTemplate.query("select * from person", new PersonRowMapper());
+        return jdbcTemplate.query("select * from person order by person_id", new PersonRowMapper());
     }
 
     public Person show(long id) {

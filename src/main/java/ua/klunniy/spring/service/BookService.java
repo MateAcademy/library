@@ -28,7 +28,12 @@ public class BookService {
     }
 
     public Book show(String name) {
-        return bookDAO.show(name).stream().findAny().orElse(null);
+        Book book = bookDAO.show(name).stream().findAny().orElse(null);
+        return book;
+    }
+
+    public Book show(String bookName, String author, int year) {
+        return  bookDAO.show(bookName, author, year).stream().findAny().orElse(null);
     }
 
     public void save(Book book) {

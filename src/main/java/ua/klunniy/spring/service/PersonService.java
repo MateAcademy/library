@@ -24,7 +24,10 @@ public class PersonService {
         return personDAO.index();
     }
 
-    public Person show(long id) {
+    public Person show(Long id) {
+        if (id == null) {
+            return null;
+        }
         return personDAO.show(id);
     }
 

@@ -47,7 +47,7 @@ public class PeopleController {
     }
 
     @GetMapping("/{id}")
-    public String showPersonById(@PathVariable("id") int id, Model model) {
+    public String showPersonById(@PathVariable("id") long id, Model model) {
 // Получим одного человека по id из DAO и передадим на отображение в представление
         model.addAttribute("person", personService.show(id));
         return "/people/show";
@@ -75,7 +75,7 @@ public class PeopleController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editPerson(Model model, @PathVariable("id") int id) {
+    public String editPerson(Model model, @PathVariable("id") long id) {
         model.addAttribute("person", personService.show(id));
         return "/people/edit";
     }

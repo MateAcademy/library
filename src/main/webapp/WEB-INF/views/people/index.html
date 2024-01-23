@@ -26,17 +26,15 @@
         </tr>
         </thead>
         <tbody>
-        <!-- Виведення даних про людей зі списку -->
         <tr th:each="person : ${people}">
             <td th:text="${person.getId()}"></td>
-            <td th:text="${person.getFirstName()}"></td>
-            <td th:text="${person.getLastName()}"></td>
-            <td th:text="${person.getPatronymic()}"></td>
-            <td th:text="${person.getAge()}"></td>
-            <td th:text="${person.getEmail()}"></td>
-            <td th:text="${person.getAddress()}"></td>
+            <td><a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getFirstName()}"></a></td>
+            <td><a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getLastName()}"></a></td>
+            <td><a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getPatronymic()}"></a></td>
+            <td><a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getAge()}"></a></td>
+            <td><a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getEmail()}"></a></td>
+            <td><a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getAddress()}"></a></td>
             <td><a th:href="@{/people/{id}/edit(id=${person.getId()})}" th:text="update"></a></td>
-<!--            <td ><a th:method="delete" th:href="@{/people/{id}(id=${person.getId()})}" th:text="delete"></a></td>-->
             <td>
                 <form th:action="@{/people/{id}(id=${person.getId()})}" th:method="delete"
                       onsubmit="return confirm('Are you sure you want to delete the user?')">

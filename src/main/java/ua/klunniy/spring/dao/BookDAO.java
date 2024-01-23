@@ -30,7 +30,7 @@ public class BookDAO {
 
     public List<Book> index() {
 //        return jdbcTemplate.query("SELECT * from Book", new BeanPropertyRowMapper<>(Book.class));
-        return jdbcTemplate.query("SELECT * from Book", new BookRowMapper());
+        return jdbcTemplate.query("SELECT * from Book order by book_id", new BookRowMapper());
     }
 
     public Book show(long id) {
@@ -41,6 +41,12 @@ public class BookDAO {
 
     public Optional<Book> show(String name) {
         return jdbcTemplate.query("SELECT * from Book where name_book=?", new Object[]{name}, new BookRowMapper())
+                .stream().findAny();
+    }
+
+    public Optional<Book> show(String bookName, String author, int year) {
+        return jdbcTemplate.query("SELECT * from Book where name_book=? and author=? and year=?" , new Object[]{bookName, author, year},
+                        new BookRowMapper())
                 .stream().findAny();
     }
 
