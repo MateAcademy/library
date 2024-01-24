@@ -11,6 +11,7 @@ import ua.klunniy.spring.service.BookService;
 import ua.klunniy.spring.service.PersonService;
 import ua.klunniy.spring.util.BookValidator;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -52,14 +53,28 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public String showBookById(@PathVariable("id") long id, Model model) {
-        model.addAttribute("book", bookService.show(id));
-        model.addAttribute("condition", null);
-        List<Person> index = personService.index();
-        model.addAttribute("people", index );
-        model.addAttribute("person", new Person() );
-
+    public String showBookById(@PathVariable("id") long id, Model model, HttpSession httpSession) {
+        Book book = bookService.show(id);
+        model.addAttribute("book", book);
+        Long personIdWhoGetTheBook = book.getPersonId();
+        if (personIdWhoGetTheBook != null) {
+            Person personWhoGetThisBook = personService.show(personIdWhoGetTheBook);
+            model.addAttribute("person", personWhoGetThisBook);
+            model.addAttribute("condition", "people present");
+        } else {
+            model.addAttribute("condition", null);
+            List<Person> index = personService.index();
+            model.addAttribute("people", index );
+            model.addAttribute("person", new Person() );
+            httpSession.setAttribute("book", book);
+        }
         return "/book/show";
+    }
+
+    @PatchMapping("/{id}/release")
+    public String freeTheBook(@PathVariable("id") long bookId) {
+        bookService.releaseTheBookFromThePerson(bookId);
+        return "redirect:/books/" + bookId;
     }
 
     @GetMapping("/new")
@@ -81,10 +96,11 @@ public class BookController {
     }
 
     @PatchMapping("/appoint")
-    public String appoint(@ModelAttribute("person") Person person) {
+    public String appoint(@ModelAttribute("person") Person person, HttpSession httpSession, Model model) {
+        Book book = (Book) httpSession.getAttribute("book");
         Long personId = person.getId();
-
-
+        bookService.setPersonId(book.getBookId(), personId);
+        model.addAttribute("book", book);
         return "/book/show";
     }
 

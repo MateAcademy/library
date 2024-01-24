@@ -33,15 +33,19 @@
     <div th:text="${book.getNameBook()} + ', ' +  ${book.getAuthor()} + ', ' +  ${book.getYear()}"></div>
     <br>
     <div th:if="${condition != null}">
-
+      <div th:text="'Книга сейчас у: ' + ${person.getFirstName()} + ' ' + ${person.getLastName()} + ' ' + ${person.getPatronymic()}"></div>
+        <form th:action="@{/books/{id}/release(id=${book.getBookId()})}" th:method="patch">
+            <button type="submit">Освободить книгу</button>
+        </form>
     </div>
+
     <div th:if="${condition == null}">
         Эта книга свободна. Кому назначить ее?
         <form th:method="patch" th:action="@{/books/appoint}">
             <label for="person">Выберите человека:</label>
             <select th:object="${person}" th:field="*{id}" id="person">
                 <option th:each="person : ${people}" th:value="${person.getId()}"
-                        th:text="${person.getFirstName()}"></option>
+                        th:text="${person.getFirstName()} + ' ' + ${person.getLastName()} + ' ' + ${person.getPatronymic()}"></option>
             </select>
 
             <input type="submit" name="Назначить на этого пользователя" />
@@ -64,6 +68,9 @@
 
     <div class="h3" th:if="${condition == null}">
        Книга в библиотеке и свободна
+    </div>
+    <div class="h3" th:if="${condition != null}">
+        Назначили книгу человеку
     </div>
 
 </div>

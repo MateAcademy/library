@@ -31,8 +31,11 @@ public class BookService {
     }
 
     public Book show(String name) {
-        Book book = bookDAO.show(name).stream().findAny().orElse(null);
-        return book;
+        return bookDAO.show(name).stream().findAny().orElse(null);
+    }
+
+    public void releaseTheBookFromThePerson(Long bookId) {
+        bookDAO.releaseTheBookFromThePerson(bookId);
     }
 
     public Book show(String bookName, String author, int year) {
@@ -53,6 +56,10 @@ public class BookService {
 
     public void delete(int id) {
         bookDAO.delete(id);
+    }
+
+    public void setPersonId(Long bookId, Long personId) {
+        bookDAO.setPersonId(bookId, personId);
     }
 
 }

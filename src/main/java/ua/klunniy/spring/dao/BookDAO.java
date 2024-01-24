@@ -70,8 +70,18 @@ public class BookDAO {
                 updateBook.getNameBook(), updateBook.getAuthor(), updateBook.getYear(), id);
     }
 
+    public void releaseTheBookFromThePerson(Long bookId) {
+        jdbcTemplate.update("UPDATE Book SET person_id=? where book_id=?",
+                null, bookId);
+    }
+
+
     public void delete(int id) {
         jdbcTemplate.update("DELETE from Book where book_id=?", id);
+    }
+
+    public void setPersonId(Long bookId, Long personId) {
+        jdbcTemplate.update("UPDATE Book SET person_id=? where book_id=?", personId, bookId);
     }
 
 }
