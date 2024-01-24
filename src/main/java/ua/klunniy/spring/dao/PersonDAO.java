@@ -32,6 +32,11 @@ public class PersonDAO {
                 new Object[]{id}, new PersonRowMapper()).stream().findAny().orElse(null);
     }
 
+    public Person show(String firstName, String lastName, String patronymic) {
+        return jdbcTemplate.query("select * from person where first_name=? and last_name=? and patronymic=?",
+                new Object[]{firstName, lastName, patronymic}, new PersonRowMapper()).stream().findAny().orElse(null);
+    }
+
     public Optional<Person> showByEmail(String email) {
         return jdbcTemplate.query("SELECT * from Person where email=?", new Object[]{email},
                 new BeanPropertyRowMapper<>(Person.class)).stream().findAny();
@@ -39,6 +44,21 @@ public class PersonDAO {
 
     public Optional<Person> showByAddress(String address) {
         return jdbcTemplate.query("SELECT * from Person where address=?", new Object[]{address},
+                new PersonRowMapper()).stream().findAny();
+    }
+
+    public Optional<Person> showByFirstName(String firstName) {
+        return jdbcTemplate.query("SELECT * from Person where first_name=?", new Object[]{firstName},
+                new PersonRowMapper()).stream().findAny();
+    }
+
+    public Optional<Person> showByLastName(String lastName) {
+        return jdbcTemplate.query("SELECT * from Person where last_name=?", new Object[]{lastName},
+                new PersonRowMapper()).stream().findAny();
+    }
+
+    public Optional<Person> showByPatronymic(String patronymic) {
+        return jdbcTemplate.query("SELECT * from Person where patronymic=?", new Object[]{patronymic},
                 new PersonRowMapper()).stream().findAny();
     }
 

@@ -26,12 +26,22 @@ public class BookValidator implements Validator {
     }
 
     @Override
-    public void validate(Object target, Errors errors) {
+    public void validate(Object o, Errors errors) {
 
-        Book book = (Book) target;
+        Book book = (Book) o;
         String bookName = book.getNameBook();
         String author = book.getAuthor();
         int year = book.getYear();
+
+        Book bookFromDb = bookService.show(book.getBookId());
+
+        if (bookFromDb != null) {
+
+        } else {
+
+        }
+
+
 
         if (bookService.show(bookName, author, year) != null) {
             errors.rejectValue("name", "", "In db is present such book name");

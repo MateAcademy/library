@@ -21,6 +21,7 @@
 <body>
     <h1 class="h1">Страница добавления человека</h1>
     <h1 class="h1">/people/new</h1>
+    <hr/>
     <form th:class="h1" th:method="post" th:action="@{/people/new}" th:object="${person}">
         <div>
             <label for="firstName">FirstName</label>
@@ -51,10 +52,9 @@
         </div>
     </form>
 
-
     <br/>
     <hr/>
-    <h2 class="h2"><a href="/">Main page</a></h2>
+    <h2 class="h2"><a href="/">На главную страницу</a></h2>
 
 </body>
 </html>

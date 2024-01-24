@@ -38,8 +38,15 @@ public class PersonValidator implements Validator {
                 errors.rejectValue("email", "", "Error, this email is present in database");
             }
 
-            if (!(person.getAddress().equals(personFromDb.getAddress())) && personService.showByAddress(person.getAddress()).isPresent()) {
-                errors.rejectValue("address", "", "Error, this address is present in database");
+            if (person.getFirstName().equals(personFromDb.getFirstName()) && person.getLastName().equals(personFromDb.getLastName())
+                    && person.getPatronymic().equals(personFromDb.getPatronymic())) {
+            } else {
+                String firstName = person.getFirstName();
+                String lastName = person.getLastName();
+                String patronymic = person.getPatronymic();
+                if (personService.show(firstName, lastName, patronymic)) {
+                    errors.rejectValue("firstName", "", "Error, this firstName, lastName, patronymic is present in database");
+                }
             }
         } else {
 //проверку сделать на длину емейла

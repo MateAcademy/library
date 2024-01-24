@@ -23,7 +23,10 @@ public class BookService {
         return bookDAO.index();
     }
 
-    public Book show(long id) {
+    public Book show(Long id) {
+        if (id == null) {
+            return null;
+        }
         return bookDAO.show(id);
     }
 

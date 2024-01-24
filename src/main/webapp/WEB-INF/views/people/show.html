@@ -7,22 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Info for one person</title>
     <style>
-        table {
-            border-collapse: collapse;
-            width: 80%; /* Ширина таблиці, можна змінити відповідно до ваших потреб */
-            margin: auto;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
         .h1 {
             text-align: center;
             font-size: 30px;
@@ -38,8 +22,8 @@
 
     <h1 class="h1">Страница нового/добавленного человека</h1>
     <h1 class="h1">/people/show</h1>
+    <hr/>
 
-    <!-- Виведення даних про одну людину -->
     <div class="h2">
         <p><strong>Id:</strong> <span th:text="${person.getId()}"></span></p>
         <p><strong>First Name:</strong> <span th:text="${person.getFirstName()}"></span></p>
@@ -49,9 +33,9 @@
         <p><strong>Email:</strong> <span th:text="${person.getEmail()}"></span></p>
         <p><strong>Address:</strong> <span th:text="${person.getAddress()}"></span></p>
         <hr/>
-        <a href="/people/" >Show all people</a>
+        <a href="/people/" >Страница со списком всех людей</a>
         <br>
-        <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edite this person</a>
+        <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Редактировать этого человека</a>
         <p> <form th:action="@{/people/{id}(id=${person.getId()})}" th:method="delete"
                   onsubmit="return confirm('Are you sure you want to delete the user?')">
         <button type="submit">delete</button>
@@ -60,10 +44,7 @@
 
     <br/>
     <hr/>
-    <h2 class="h2"><a href="/">Main page</a></h2>
-
-<!--<p th:text="${person.getName()}">VALUE</p>-->
-<!--<p th:text="${person.getId()}">VALUE</p>-->
+    <h2 class="h2"><a href="/">На главную страницу</a></h2>
 
 </body>
 </html>

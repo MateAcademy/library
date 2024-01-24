@@ -31,6 +31,11 @@ public class PersonService {
         return personDAO.show(id);
     }
 
+    public boolean show(String firstName, String lastName, String patronymic) {
+        Person show = personDAO.show(firstName, lastName, patronymic);
+        return show != null;
+    }
+
     public Optional<Person> showByEmail(String email) {
         return personDAO.showByEmail(email);
     }
@@ -39,6 +44,18 @@ public class PersonService {
         return personDAO.showByAddress(address);
     }
 
+    public Optional<Person> showByFirstName(String firstName) {
+        return personDAO.showByFirstName(firstName);
+    }
+
+    public Optional<Person> showByLastName(String lastName) {
+        return personDAO.showByLastName(lastName);
+    }
+
+
+    public Optional<Person> showByPatronymic(String patronymic) {
+        return personDAO.showByPatronymic(patronymic);
+    }
     public void save(Person person) {
         if (person != null) {
             personDAO.save(person);

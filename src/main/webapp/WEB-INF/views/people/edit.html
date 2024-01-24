@@ -17,8 +17,9 @@
 </head>
 <body>
 
-<h1 class="h1">Страница изменения человека</h1>
-<h1 class="h1">/people/{id}/edit</h1>
+    <h1 class="h1">Страница изменения человека</h1>
+    <h1 class="h1">/people/{id}/edit</h1>
+    <hr/>
 
     <form th:class="h1" th:method="patch" th:action="@{/people/{id}(id=${person.getId()})}" th:object="${person}">
         <!--            <input type="hidden" name="_method" value="patch">-->
@@ -51,7 +52,7 @@
 
     <br/>
     <hr/>
-    <h2 class="h2"><a href="/">Main page</a></h2>
+    <h2 class="h2"><a href="/">На главную страницу</a></h2>
 
 
 </body>
