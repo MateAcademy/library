@@ -55,4 +55,8 @@ public class PersonService {
         personDAO.delete(id);
     }
 
+    public Optional<Person> showSuchPerson(Person person) {
+        return personDAO.showSuchPerson(person);
+    }
+
 }

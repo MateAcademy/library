@@ -50,6 +50,10 @@ public class PersonValidator implements Validator {
             if ((personService.showByAddress(person.getAddress()).isPresent())) {
                 errors.rejectValue("address", "", "Error, this address is present in database");
             }
+
+            if ((personService.showSuchPerson(person).isPresent())) {
+                errors.rejectValue("firstName", "", "Error, this Person is present in database");
+            }
         }
     }
 

@@ -39,7 +39,7 @@ public class PersonDAO {
 
     public Optional<Person> showByAddress(String address) {
         return jdbcTemplate.query("SELECT * from Person where address=?", new Object[]{address},
-                new BeanPropertyRowMapper<>(Person.class)).stream().findAny();
+                new PersonRowMapper()).stream().findAny();
     }
 
     public void save(Person person) {
@@ -70,6 +70,12 @@ public class PersonDAO {
 
     public void delete(int id) {
         jdbcTemplate.update("DELETE from Person where person_id=?", id);
+    }
+
+    public Optional<Person> showSuchPerson(Person person) {
+       return jdbcTemplate.query("SELECT * from Person where first_name=? and " +
+               "last_name=? and patronymic=?", new Object[]{person.getFirstName(), person.getLastName(),
+               person.getPatronymic()}, new PersonRowMapper()).stream().findAny();
     }
 
 }
