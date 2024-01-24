@@ -41,8 +41,8 @@
     <h2 class="h2"><a href="/people/">Show all people</a></h2>
     <h2 class="h2"><a href="/people/new">Add new person</a></h2>
     <hr>
-    <h2 class="h2"><a href="/book/">Show all books</a></h2>
-    <h2 class="h2"><a href="/book/new">Add new book</a></h2>
+    <h2 class="h2"><a href="/books/">Show all books</a></h2>
+    <h2 class="h2"><a href="/books/new">Add new book</a></h2>
     <hr>
 
 </body>

@@ -76,6 +76,7 @@ public class PeopleController {
     @GetMapping("/{id}/edit")
     public String editPerson(Model model, @PathVariable("id") long id) {
         model.addAttribute("person", personService.show(id));
+
         return "/people/edit";
     }
 

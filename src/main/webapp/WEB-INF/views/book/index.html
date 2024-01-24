@@ -56,14 +56,14 @@
             <td th:text="${book.getBookId()}"></td>
             <td th:text="${book.getPersonId()}"></td>
             <!--     <td th:text="${book.getNameBook()}"></td> -->
-            <td><a th:href="@{/book/{id}(id=${book.getBookId()})}" th:text="${book.getNameBook()}"></a></td>
+            <td><a th:href="@{/books/{id}(id=${book.getBookId()})}" th:text="${book.getNameBook()}"></a></td>
             <!-- <td th:text="${book.getAuthor()}"></td> -->
-            <td><a th:href="@{/book/{id}(id=${book.getBookId()})}" th:text="${book.getAuthor()}"></a></td>
+            <td><a th:href="@{/books/{id}(id=${book.getBookId()})}" th:text="${book.getAuthor()}"></a></td>
             <!--<td th:text="${book.getYear()}"></td> -->
-            <td><a th:href="@{/book/{id}(id=${book.getBookId()})}" th:text="${book.getYear()}"></a></td>
-            <td><a th:href="@{/book/{id}/edit(id=${book.getBookId()})}" th:text="update"></a></td>
+            <td><a th:href="@{/books/{id}(id=${book.getBookId()})}" th:text="${book.getYear()}"></a></td>
+            <td><a th:href="@{/books/{id}/edit(id=${book.getBookId()})}" th:text="update"></a></td>
             <td>
-                <form th:action="@{/book/{id}(id=${book.getBookId()})}" th:method="delete"
+                <form th:action="@{/books/{id}(id=${book.getBookId()})}" th:method="delete"
                       onsubmit="return confirm('Are you sure you want to delete the book?')">
                     <button type="submit">delete</button>
                 </form>
@@ -74,7 +74,7 @@
 
     <br/>
     <hr>
-    <h2 class="h2"><a href="/book/new" >Добавить книгу</a></h2>
+    <h2 class="h2"><a href="/books/new" >Добавить книгу</a></h2>
     <h2 class="h2"><a href="/">На главную страницу</a></h2>
 
 </body>

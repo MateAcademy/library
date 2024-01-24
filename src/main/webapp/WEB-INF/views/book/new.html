@@ -24,7 +24,7 @@
     <h1 class="h1">/books/new</h1>
     <hr/>
 
-    <form th:class="h1" th:method="post" th:action="@{/book/new}" th:object="${book}">
+    <form th:class="h1" th:method="post" th:action="@{/books/new}" th:object="${book}">
         <div>
             <label for="nameBook">NameBook</label>
             <input type="text" th:field="*{nameBook}" id="nameBook"/>

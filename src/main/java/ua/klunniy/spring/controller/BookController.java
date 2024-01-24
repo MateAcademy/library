@@ -6,10 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.klunniy.spring.models.Book;
+import ua.klunniy.spring.models.Person;
 import ua.klunniy.spring.service.BookService;
+import ua.klunniy.spring.service.PersonService;
 import ua.klunniy.spring.util.BookValidator;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * REST описывает то какие URLы и HTTP методы у нас должны быть для взаимодействия с данными
@@ -28,15 +31,18 @@ import javax.validation.Valid;
  * PATCH   /posts/:id          Обновляем запись(UPDATE)
  */
 @Controller
-@RequestMapping("/book")
+@RequestMapping("/books")
 public class BookController {
     private final BookService bookService;
     private final BookValidator bookValidator;
 
+    private final PersonService personService;
+
     @Autowired
-    public BookController(BookService bookService, BookValidator bookValidator) {
+    public BookController(BookService bookService, BookValidator bookValidator, PersonService personService) {
         this.bookService = bookService;
         this.bookValidator = bookValidator;
+        this.personService = personService;
     }
 
     @GetMapping
@@ -48,6 +54,11 @@ public class BookController {
     @GetMapping("/{id}")
     public String showBookById(@PathVariable("id") long id, Model model) {
         model.addAttribute("book", bookService.show(id));
+        model.addAttribute("condition", null);
+        List<Person> index = personService.index();
+        model.addAttribute("people", index );
+        model.addAttribute("person", new Person() );
+
         return "/book/show";
     }
 
@@ -66,6 +77,14 @@ public class BookController {
         }
 
         bookService.save(book);
+        return "/book/show";
+    }
+
+    @PatchMapping("/appoint")
+    public String appoint(@ModelAttribute("person") Person person) {
+        Long personId = person.getId();
+
+
         return "/book/show";
     }
 

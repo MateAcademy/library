@@ -21,7 +21,7 @@
     <h1 class="h1">/books/{id}/edit</h1>
     <hr/>
 
-    <form th:class="h1" th:method="patch" th:action="@{/book/{id}(id=${book.getBookId()})}" th:object="${book}">
+    <form th:class="h1" th:method="patch" th:action="@{/books/{id}(id=${book.getBookId()})}" th:object="${book}">
         <!--  <input type="hidden" name="_method" value="patch">-->
         <label for="nameBook">Name</label>
         <input type="text" th:field="*{nameBook}" id="nameBook"/>
