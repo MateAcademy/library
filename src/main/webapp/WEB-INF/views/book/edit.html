@@ -23,19 +23,19 @@
 
     <form th:class="h1" th:method="patch" th:action="@{/books/{id}(id=${book.getBookId()})}" th:object="${book}">
         <!--  <input type="hidden" name="_method" value="patch">-->
-        <label for="nameBook">Name</label>
+        <label for="nameBook">Введите название книги:</label>
         <input type="text" th:field="*{nameBook}" id="nameBook"/>
         <div style="color:red" th:if="${#fields.hasErrors('nameBook')}" th:errors="*{nameBook}">Name Book error</div>
         <br>
-        <label for="Author">Author</label>
+        <label for="Author">Введите автора:</label>
         <input type="text" th:field="*{author}" id="Author"/>
         <div style="color:red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Author error</div>
         <br>
-        <label for="Year">Year</label>
+        <label for="Year">Введите год:</label>
         <input type="text" th:field="*{year}" id="Year"/>
         <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Year error</div>
         <br>
-        <input type="submit" value="Update Book"/>
+        <input type="submit" value="Редактировать!"/>
     </form>
 
     <br/>

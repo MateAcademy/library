@@ -33,7 +33,7 @@ public class BookValidator implements Validator {
         String author = book.getAuthor();
         int year = book.getYear();
 
-        Book bookFromDb = bookService.show(book.getBookId());
+        Book bookFromDb = bookService.getBookById(book.getBookId());
 
         if (bookFromDb != null) {
 
@@ -43,7 +43,7 @@ public class BookValidator implements Validator {
 
 
 
-        if (bookService.show(bookName, author, year) != null) {
+        if (bookService.getBookById(bookName, author, year) != null) {
             errors.rejectValue("name", "", "In db is present such book name");
         }
 

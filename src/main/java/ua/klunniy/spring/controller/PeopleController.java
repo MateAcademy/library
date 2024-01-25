@@ -5,11 +5,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ua.klunniy.spring.models.Book;
 import ua.klunniy.spring.models.Person;
+import ua.klunniy.spring.service.BookService;
 import ua.klunniy.spring.service.PersonService;
 import ua.klunniy.spring.util.PersonValidator;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * REST описывает то какие URLы и HTTP методы у нас должны быть для взаимодействия с данными
@@ -32,11 +35,13 @@ import javax.validation.Valid;
 @RequestMapping("/people")
 public class PeopleController {
     private final PersonService personService;
+    private final BookService bookService;
     private final PersonValidator personValidator;
 
     @Autowired
-    public PeopleController(PersonService personService, PersonValidator personValidator) {
+    public PeopleController(PersonService personService, BookService bookService, PersonValidator personValidator) {
         this.personService = personService;
+        this.bookService = bookService;
         this.personValidator = personValidator;
     }
 
@@ -47,13 +52,17 @@ public class PeopleController {
     }
 
     @GetMapping("/{id}")
-    public String showPersonById(@PathVariable("id") long id, Model model) {
-// Получим одного человека по id из DAO и передадим на отображение в представление
-        model.addAttribute("person", personService.show(id));
+    public String showPersonById(@PathVariable("id") long personId, Model model) {
+        model.addAttribute("person", personService.show(personId));
+        List<Book> bookList = bookService.getListBooksByPersonId(personId);
+        if (bookList.isEmpty()) {
+            model.addAttribute("condition", null);
+        } else {
+            model.addAttribute("condition", "text");
+            model.addAttribute("bookList", bookList);
+        }
         return "/people/show";
     }
-
-// по адресу /people/new вернется html форма создания человека
 
     @GetMapping("/new")
     public String newPerson(@ModelAttribute("person") Person person) {

@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author Serhii Klunniy
@@ -31,6 +32,12 @@ public class BookDAO {
     public List<Book> index() {
 //        return jdbcTemplate.query("SELECT * from Book", new BeanPropertyRowMapper<>(Book.class));
         return jdbcTemplate.query("SELECT * from Book order by book_id", new BookRowMapper());
+    }
+
+    public List<Book> getListBooksByPersonId(Long personId) {
+       return jdbcTemplate.query("SELECT * from Book where person_id=?", new Object[]{personId},
+                        new BookRowMapper())
+                .stream().collect(Collectors.toList());
     }
 
     public Book show(long id) {

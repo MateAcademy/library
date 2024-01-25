@@ -23,22 +23,29 @@ public class BookService {
         return bookDAO.index();
     }
 
-    public Book show(Long id) {
-        if (id == null) {
+    public Book getBookById(Long bookId) {
+        if (bookId == null) {
             return null;
         }
-        return bookDAO.show(id);
+        return bookDAO.show(bookId);
     }
 
-    public Book show(String name) {
-        return bookDAO.show(name).stream().findAny().orElse(null);
+    public List<Book> getListBooksByPersonId(Long personId) {
+        if (personId == null) {
+            return null;
+        }
+        return bookDAO.getListBooksByPersonId(personId);
     }
+
+//    public Book getBookById(String name) {
+//        return bookDAO.show(name).stream().findAny().orElse(null);
+//    }
 
     public void releaseTheBookFromThePerson(Long bookId) {
         bookDAO.releaseTheBookFromThePerson(bookId);
     }
 
-    public Book show(String bookName, String author, int year) {
+    public Book getBookById(String bookName, String author, int year) {
         return  bookDAO.show(bookName, author, year).stream().findAny().orElse(null);
     }
 

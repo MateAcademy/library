@@ -13,38 +13,55 @@
         }
 
         .h2 {
-            text-align: center;
+            text-align: left;
             font-size: 20px;
         }
     </style>
 </head>
 <body>
 
-    <h1 class="h1">Страница нового/добавленного человека</h1>
-    <h1 class="h1">/people/show</h1>
-    <hr/>
+<h1 class="h1">Страница человека</h1>
+<h1 class="h1">/people/{id}</h1>
+<hr/>
 
-    <div class="h2">
-        <p><strong>Id:</strong> <span th:text="${person.getId()}"></span></p>
-        <p><strong>First Name:</strong> <span th:text="${person.getFirstName()}"></span></p>
-        <p><strong>Last Name:</strong> <span th:text="${person.getLastName()}"></span></p>
-        <p><strong>Patronymic:</strong> <span th:text="${person.getPatronymic()}"></span></p>
-        <p><strong>Age:</strong> <span th:text="${person.getAge()}"></span></p>
-        <p><strong>Email:</strong> <span th:text="${person.getEmail()}"></span></p>
-        <p><strong>Address:</strong> <span th:text="${person.getAddress()}"></span></p>
-        <hr/>
-        <a href="/people/" >Страница со списком всех людей</a>
-        <br>
-        <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Редактировать этого человека</a>
-        <p> <form th:action="@{/people/{id}(id=${person.getId()})}" th:method="delete"
-                  onsubmit="return confirm('Are you sure you want to delete the user?')">
-        <button type="submit">delete</button>
-            </form>
+<div class="h2">
+    <div th:text="${person.getFirstName()} + ', ' +  ${person.getLastName()} + ', ' +  ${person.getPatronymic()}
+ + ', ' +  ${person.getAge()}"></div>
+    <br/>
+
+    <div th:if="${condition == null}">
+        <h3>Человек пока не взял ни одной книги</h3>
     </div>
 
-    <br/>
+    <div th:if="${condition != null}">
+        <hr/>
+        <b>Книги:</b>
+        <ul>
+            <li th:each="book : ${bookList}">
+                <!--                    <span th:text="${book.getNameBook()}"></span></li>-->
+                <span th:text="${book.getNameBook()} + ', ' + ${book.getAuthor()} + ', '+ ${book.getYear()}"></span>
+            </li>
+        </ul>
+    </div>
+
     <hr/>
-    <h2 class="h2"><a href="/">На главную страницу</a></h2>
+    <a href="/people/">Страница со списком всех людей</a>
+    <br/>
+    <br/>
+<!--    <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Редактировать этого человека</a>-->
+    <form th:action="@{/people/{id}/edit(id=${person.getId()})}" th:method="delete">
+        <button type="submit">Редактировать</button>
+    </form>
+    <p>
+    <form th:action="@{/people/{id}(id=${person.getId()})}" th:method="delete"
+          onsubmit="return confirm('Are you sure you want to delete the user?')">
+        <button type="submit">Удалить</button>
+    </form>
+</div>
+
+<br/>
+<hr/>
+<h2 class="h2"><a href="/">На главную страницу</a></h2>
 
 </body>
 </html>

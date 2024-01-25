@@ -53,8 +53,8 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public String showBookById(@PathVariable("id") long id, Model model, HttpSession httpSession) {
-        Book book = bookService.show(id);
+    public String showBookById(@PathVariable("id") long bookId, Model model, HttpSession httpSession) {
+        Book book = bookService.getBookById(bookId);
         model.addAttribute("book", book);
         Long personIdWhoGetTheBook = book.getPersonId();
         if (personIdWhoGetTheBook != null) {
@@ -71,10 +71,33 @@ public class BookController {
         return "/book/show";
     }
 
-    @PatchMapping("/{id}/release")
-    public String freeTheBook(@PathVariable("id") long bookId) {
+//"release a book" - "освободить книгу" от читателя
+    @PatchMapping("/{id}/releaseABook")
+    public String freeTheBook(@PathVariable("id") long bookId, Model model, HttpSession httpSession) {
         bookService.releaseTheBookFromThePerson(bookId);
-        return "redirect:/books/" + bookId;
+        Book book = bookService.getBookById(bookId);
+        model.addAttribute("book", book);
+        model.addAttribute("condition", null);
+        List<Person> index = personService.index();
+        model.addAttribute("people", index );
+        model.addAttribute("person", new Person() );
+        httpSession.setAttribute("book", book);
+        return "/book/show";
+    }
+
+//"назначить книгу" - "assign a book"
+    @PatchMapping("/assignABook")
+    public String appoint(@ModelAttribute("person") Person person,
+                           Model model, HttpSession httpSession) {
+        Book book = (Book) httpSession.getAttribute("book");
+        Long personId = person.getId();
+        bookService.setPersonId(book.getBookId(), personId);
+        book.setPersonId(personId);
+        model.addAttribute("book", book);
+        Person personWhoGetThisBook = personService.show(personId);
+        model.addAttribute("person", personWhoGetThisBook);
+        model.addAttribute("condition", "people present");
+        return "/book/show";
     }
 
     @GetMapping("/new")
@@ -95,18 +118,9 @@ public class BookController {
         return "/book/show";
     }
 
-    @PatchMapping("/appoint")
-    public String appoint(@ModelAttribute("person") Person person, HttpSession httpSession, Model model) {
-        Book book = (Book) httpSession.getAttribute("book");
-        Long personId = person.getId();
-        bookService.setPersonId(book.getBookId(), personId);
-        model.addAttribute("book", book);
-        return "/book/show";
-    }
-
     @GetMapping("/{id}/edit")
     public String editBook(Model model, @PathVariable("id") long id) {
-        model.addAttribute("book", bookService.show(id));
+        model.addAttribute("book", bookService.getBookById(id));
         return "/book/edit";
     }
 
@@ -122,7 +136,7 @@ public class BookController {
 
         book.setBookId(id);
         bookService.update(id, book);
-        return "/book/show";
+        return "redirect:/books/" + id;
     }
 
     @DeleteMapping("/{id}")

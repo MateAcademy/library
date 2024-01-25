@@ -34,14 +34,14 @@
     <br>
     <div th:if="${condition != null}">
       <div th:text="'Книга сейчас у: ' + ${person.getFirstName()} + ' ' + ${person.getLastName()} + ' ' + ${person.getPatronymic()}"></div>
-        <form th:action="@{/books/{id}/release(id=${book.getBookId()})}" th:method="patch">
+        <form th:action="@{/books/{id}/releaseABook(id=${book.getBookId()})}" th:method="patch">
             <button type="submit">Освободить книгу</button>
         </form>
     </div>
 
     <div th:if="${condition == null}">
         Эта книга свободна. Кому назначить ее?
-        <form th:method="patch" th:action="@{/books/appoint}">
+        <form th:method="patch" th:action="@{/books/assignABook}">
             <label for="person">Выберите человека:</label>
             <select th:object="${person}" th:field="*{id}" id="person">
                 <option th:each="person : ${people}" th:value="${person.getId()}"
