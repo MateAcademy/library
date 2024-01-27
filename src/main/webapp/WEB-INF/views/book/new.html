@@ -26,15 +26,15 @@
 
     <form th:class="h1" th:method="post" th:action="@{/books/new}" th:object="${book}">
         <div>
-            <label for="nameBook">NameBook</label>
+            <label for="nameBook">Введите название книги:</label>
             <input type="text" th:field="*{nameBook}" id="nameBook"/>
             <div style="color:red" th:if="${#fields.hasErrors('nameBook')}" th:errors="*{nameBook}">NameBook error</div>
             <br>
-            <label for="author">Author</label>
+            <label for="author">Введите автора:</label>
             <input type="text" th:field="*{author}" id="author"/>
             <div style="color:red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}">Author error</div>
             <br>
-            <label for="year">Year</label>
+            <label for="year">Введите год:</label>
             <input type="text" th:field="*{year}" id="year"/>
             <div style="color:red" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Year error</div>
             <br>

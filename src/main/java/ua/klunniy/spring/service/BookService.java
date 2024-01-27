@@ -30,7 +30,7 @@ public class BookService {
         return bookDAO.show(bookId);
     }
 
-    public List<Book> getListBooksByPersonId(Long personId) {
+    public List<Book> getBooksByPersonId(Long personId) {
         if (personId == null) {
             return null;
         }

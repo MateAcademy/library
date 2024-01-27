@@ -54,7 +54,7 @@ public class PeopleController {
     @GetMapping("/{id}")
     public String showPersonById(@PathVariable("id") long personId, Model model) {
         model.addAttribute("person", personService.show(personId));
-        List<Book> bookList = bookService.getListBooksByPersonId(personId);
+        List<Book> bookList = bookService.getBooksByPersonId(personId);
         if (bookList.isEmpty()) {
             model.addAttribute("condition", null);
         } else {

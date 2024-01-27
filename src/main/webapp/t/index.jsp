@@ -7,27 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Main page</title>
     <style>
-        table {
-            border-collapse: collapse;
-            width: 80%; /* Ширина таблиці, можна змінити відповідно до ваших потреб */
-            margin: auto;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        .h1 {
-            text-align: center;
-            font-size: 30px;
-        }
-
         .h2 {
             text-align: center;
             font-size: 20px;

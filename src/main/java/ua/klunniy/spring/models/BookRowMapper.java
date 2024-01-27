@@ -25,7 +25,7 @@ public class BookRowMapper implements RowMapper<Book> {
         if (person_id == 0) {
             book.setPersonId(null);
         }
-
+        
         return book;
     }
 
