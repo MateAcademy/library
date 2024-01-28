@@ -2,3 +2,14 @@ driver=
 url=
 username_value=
 password=
+
+# Конфигурация нашего источника данных, конфигурация jdbc драйвера (Data source)
+hibernate.driver_class=
+hibernate.connection.url=
+hibernate.connection.username=
+hibernate.connection.password=
+
+# Конфигурация  самого Hibernate(это ОРМ библиотека для работы с разными реляционными БД)
+hibernate.dialect=
+hibernate.show_sql=
+hibernate.current_session_context_class=
