@@ -4,6 +4,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import java.util.List;
+
 /**
  * @author Serhii Klunniy
  */
@@ -18,12 +20,15 @@ public class Main {
 //session - это обьект для взаимодействия с хибернейт
         try (Session session = sessionFactory.getCurrentSession()) {
 
-            Buyers buyers = new Buyers("Katti", 40);
+
 
 //транзакция помогает поддерживать согласованность данных в таблице
             session.beginTransaction();
 
-            session.save(buyers);
+            Buyers buyers = session.get(Buyers.class, 1);
+            List<Purchase> purchaseList = buyers.getPurchaseList();
+            purchaseList.stream().forEach( x -> x.setBuyers(null));
+
             session.getTransaction().commit();
 
         } catch (Exception e) {

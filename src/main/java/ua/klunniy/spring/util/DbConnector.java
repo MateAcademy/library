@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -15,13 +17,13 @@ public class DbConnector {
 //    static final Logger logger = Logger.getLogger(DbConnector.class);
 
     @Value("${person.DbURL}")
-    String DbURL;
+    String DbURL = "jdbc:postgresql://localhost:5432/ava_db";
 
     @Value("${person.LOGIN}")
-    String LOGIN;
+    String LOGIN = "password";
 
     @Value("${person.PASSWORD}")
-    String PASSWORD;
+    String PASSWORD = "test";
 
     public DbConnector() {
     }
@@ -39,6 +41,21 @@ public class DbConnector {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @PostConstruct
+    private void initMethod() {
+        Connection connection = getConnection();
+        if (connection != null) {
+            System.out.println("Doing my initialization");
+        } else {
+            System.out.println("Doing my initialization ERROR with connection");
+        }
+    }
+
+    @PreDestroy
+    private void doMyDestroy() {
+        System.out.println("Doing my destruction");
     }
 
 }

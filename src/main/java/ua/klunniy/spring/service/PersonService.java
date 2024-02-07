@@ -2,7 +2,7 @@ package ua.klunniy.spring.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.klunniy.spring.dao.PersonDAO;
+import ua.klunniy.spring.dao.impl.PersonDAO;
 import ua.klunniy.spring.models.Person;
 
 import java.util.List;

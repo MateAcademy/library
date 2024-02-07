@@ -1,10 +1,8 @@
 package ua.klunniy.spring.models.hibernate2;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
@@ -17,6 +15,7 @@ import java.util.List;
 @Entity
 @ToString
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "Buyers", schema = "hibernate2")
 public class Buyers {
 

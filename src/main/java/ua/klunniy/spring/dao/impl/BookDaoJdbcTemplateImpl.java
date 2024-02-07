@@ -1,11 +1,13 @@
-package ua.klunniy.spring.dao;
+package ua.klunniy.spring.dao.impl;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
+import ua.klunniy.spring.dao.BookDao;
 import ua.klunniy.spring.models.Book;
 import ua.klunniy.spring.models.BookRowMapper;
 
@@ -20,12 +22,12 @@ import java.util.stream.Collectors;
  */
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BookDAO {
+public class BookDaoJdbcTemplateImpl implements BookDao {
 
     final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public BookDAO(JdbcTemplate jdbcTemplate) {
+    public BookDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

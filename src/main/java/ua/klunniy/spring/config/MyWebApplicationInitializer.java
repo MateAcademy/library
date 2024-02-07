@@ -12,6 +12,8 @@ import java.util.EnumSet;
 
 /**
  * @author Serhii Klunniy
+ * Этот файл заменяет web.xml, считывается сервером Apache Tomcat,
+ * конфигурирует DispatcherServlet
  */
 public class MyWebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
