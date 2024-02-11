@@ -2,7 +2,6 @@ package ua.klunniy.spring.util;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -15,25 +14,19 @@ import javax.annotation.PreDestroy;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DbConnector {
 //    static final Logger logger = Logger.getLogger(DbConnector.class);
+    private static final String URL = "jdbc:postgresql://localhost:5432/ava_db";
+    private static final String USERNAME = "postgres";
+    private static final String PASSWORD = "test";
 
-    @Value("${person.DbURL}")
-    String DbURL = "jdbc:postgresql://localhost:5432/ava_db";
-
-    @Value("${person.LOGIN}")
-    String LOGIN = "password";
-
-    @Value("${person.PASSWORD}")
-    String PASSWORD = "test";
-
-    public DbConnector() {
-    }
+    private Connection connection;
 
     public Connection getConnection() {
         try {
 //          System.setProperty("jdbc.driver", "org.postgresql.Driver");
             Class.forName("org.postgresql.Driver");
-            Connection connection = DriverManager.getConnection(DbURL, LOGIN, PASSWORD);
+//            Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 //            logger.debug("connection" + connection);
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             return connection;
         } catch (SQLException | ClassNotFoundException e) {
 //            logger.error("no connect to db: " + e);
@@ -55,6 +48,12 @@ public class DbConnector {
 
     @PreDestroy
     private void doMyDestroy() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("connection close");
+            throw new RuntimeException(e);
+        }
         System.out.println("Doing my destruction");
     }
 

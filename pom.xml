@@ -83,6 +83,7 @@
       <scope>provided</scope>
     </dependency>
 
+<!--    это наш jdbc driver-->
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>
