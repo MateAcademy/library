@@ -1,4 +1,4 @@
-package ua.klunniy.spring.dao.impl;
+package ua.klunniy.spring.dao.impl.jdbc;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;

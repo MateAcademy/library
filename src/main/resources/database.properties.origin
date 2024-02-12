@@ -1,3 +1,4 @@
+Fore database.properties
 driver=
 url=
 username_value=
@@ -9,7 +10,7 @@ hibernate.connection.url=
 hibernate.connection.username=
 hibernate.connection.password=
 
-# Конфигурация  самого Hibernate(это ОРМ библиотека для работы с разными реляционными БД)
+# Конфигурация  самого Hibernate(это ОRМ библиотека для работы с разными реляционными БД)
 hibernate.dialect=
 hibernate.show_sql=
 hibernate.current_session_context_class=

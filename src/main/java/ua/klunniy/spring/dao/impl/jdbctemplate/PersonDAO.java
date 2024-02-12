@@ -1,15 +1,13 @@
 package ua.klunniy.spring.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
 import ua.klunniy.spring.models.Person;
-import ua.klunniy.spring.models.PersonRowMapper;
+import ua.klunniy.spring.dao.rowmapper.PersonRowMapper;
 
-import java.sql.*;
 import java.util.*;
 
 /**

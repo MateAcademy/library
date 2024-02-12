@@ -1,4 +1,4 @@
-package ua.klunniy.spring;
+package ua.klunniy.spring.hibernate;
 
 import ua.klunniy.spring.models.Book;
 import ua.klunniy.spring.util.DbConnector;
@@ -16,6 +16,16 @@ public class MainForJDBC {
 //        List<Book> bookList = index();
 //        bookList.forEach(System.out::println);
 
+//        Book book = new Book("test3", "test3", 1901);
+//        save(book);
+
+//        Book book = show(1L);
+//        System.out.println(book);
+
+//        Book book = new Book("111", "111", 1981);
+//        update(2, book);
+
+        delete(4l);
     }
 
     private static List<Book> index() {
@@ -26,7 +36,7 @@ public class MainForJDBC {
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
 //Statement, это тот объект, который содержит в себе SQL запрос:
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 Book book = new Book();
                 book.setBookId(resultSet.getLong("book_id"));
                 book.setPersonId((resultSet.getLong("person_id")));
@@ -45,18 +55,69 @@ public class MainForJDBC {
         DbConnector dbConnector = new DbConnector();
         String sql = "insert into book(person_id, name_book, author, year) VALUES (?, ?, ?, ?)";
         try (Connection connection = dbConnector.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql);
-        ) {
-            statement.setLong(1, book.getPersonId());
-            statement.setString(2, book.getNameBook());
-            statement.setString(3, book.getAuthor());
-            statement.setLong(4, book.getYear());
-            statement.executeUpdate();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setObject(1, book.getPersonId());
+            ps.setString(2, book.getNameBook());
+            ps.setString(3, book.getAuthor());
+            ps.setLong(4, book.getYear());
+            ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
+
+    private static Book show(Long id) {
+        DbConnector dbConnector = new DbConnector();
+        String sql = "select * from book where book_id = ?";
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setLong(1, id);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                return new Book(
+                        resultSet.getLong("book_id"),
+                        resultSet.getLong("person_id"),
+                        resultSet.getString("name_book"),
+                        resultSet.getString("author"),
+                        resultSet.getInt("year")
+                );
+            }
+        } catch (Exception e) {
+            System.out.println("Error in method show, id = " + id + ", exception= " + e);
+        }
+        return null;
+    }
+
+    private static void update(int id, Book bookUpdate) {
+        DbConnector dbConnector = new DbConnector();
+        String sql = "update book set person_id=?, name_book=?, author=?, year=? where book_id = ?";
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setObject(1, bookUpdate.getPersonId());
+            ps.setString(2, bookUpdate.getNameBook());
+            ps.setString(3, bookUpdate.getAuthor());
+            ps.setLong(4, bookUpdate.getYear());
+            ps.setLong(5, id);
+//не подходит так как запрос не вернул результатов
+            //           ps.executeQuery();
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private static void delete (Long id) {
+        DbConnector dbConnector = new DbConnector();
+        String sql = "delete from book where book_id = ?";
+        try (Connection connection = dbConnector.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setObject(1, id);
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
 }
 
 

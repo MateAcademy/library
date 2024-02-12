@@ -3,13 +3,12 @@ package ua.klunniy.spring.dao.impl;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
 import ua.klunniy.spring.dao.BookDao;
 import ua.klunniy.spring.models.Book;
-import ua.klunniy.spring.models.BookRowMapper;
+import ua.klunniy.spring.dao.rowmapper.BookRowMapper;
 
 import java.util.HashMap;
 import java.util.List;
