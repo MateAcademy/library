@@ -10,7 +10,7 @@ import ua.klunniy.spring.service.PersonService;
  * @author Serhii Klunniy
  */
 @Controller
-@RequestMapping("test-batch-update")
+@RequestMapping("/test-batch-update")
 public class BatchController {
 
     private final PersonService personService;
@@ -25,13 +25,13 @@ public class BatchController {
         return "batch/index";
     }
 
-    @GetMapping("without")
+    @GetMapping("/without")
     public String withoutBatch() {
         personService.testMultipleUpdate();
         return "batch/index";
     }
 
-    @GetMapping("with")
+    @GetMapping("/with")
     public String withBatch() {
         personService.testBatchUpdate();
         return "batch/index";

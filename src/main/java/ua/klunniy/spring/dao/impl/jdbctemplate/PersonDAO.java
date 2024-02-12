@@ -1,6 +1,7 @@
 package ua.klunniy.spring.dao.impl.jdbctemplate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Component;
 import ua.klunniy.spring.models.Person;
 import ua.klunniy.spring.dao.rowmapper.PersonRowMapper;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -93,9 +96,34 @@ public class PersonDAO {
     }
 
     public Optional<Person> showSuchPerson(Person person) {
-       return jdbcTemplate.query("SELECT * from Person where first_name=? and " +
-               "last_name=? and patronymic=?", new Object[]{person.getFirstName(), person.getLastName(),
-               person.getPatronymic()}, new PersonRowMapper()).stream().findAny();
+        return jdbcTemplate.query("SELECT * from Person where first_name=? and " +
+                "last_name=? and patronymic=?", new Object[]{person.getFirstName(), person.getLastName(),
+                person.getPatronymic()}, new PersonRowMapper()).stream().findAny();
+    }
+
+    public void testMultipleUpdate(List<Person> personList) {
+        for (int i = 0; i < personList.size(); i++) {
+            save(personList.get(i));
+        }
+    }
+
+    public void testBatchUpdate(List<Person> personList) {
+        jdbcTemplate.batchUpdate("insert into person(first_name, last_name, patronymic, age, email, address) VALUES (?, ?, ?, ?, ?, ?)", new BatchPreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement ps, int i) throws SQLException {
+                ps.setString(1, personList.get(i).getFirstName());
+                ps.setString(2, personList.get(i).getLastName());
+                ps.setString(3, personList.get(i).getPatronymic());
+                ps.setInt(4, personList.get(i).getAge());
+                ps.setString(5, personList.get(i).getEmail());
+                ps.setString(6, personList.get(i).getAddress());
+            }
+
+            @Override
+            public int getBatchSize() {
+                return personList.size();
+            }
+        });
     }
 
 }

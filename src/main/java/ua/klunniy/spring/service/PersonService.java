@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.klunniy.spring.dao.impl.jdbctemplate.PersonDAO;
 import ua.klunniy.spring.models.Person;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,6 +57,7 @@ public class PersonService {
     public Optional<Person> showByPatronymic(String patronymic) {
         return personDAO.showByPatronymic(patronymic);
     }
+
     public void save(Person person) {
         if (person != null) {
             personDAO.save(person);
@@ -74,6 +76,42 @@ public class PersonService {
 
     public Optional<Person> showSuchPerson(Person person) {
         return personDAO.showSuchPerson(person);
+    }
+
+    public void testMultipleUpdate() {
+        long before = System.currentTimeMillis();
+        personDAO.testMultipleUpdate(get100PersonList());
+        long after = System.currentTimeMillis();
+        System.out.println("Time multiple update Database: " + (after - before));
+    }
+
+    public void testBatchUpdate() {
+        long before = System.currentTimeMillis();
+        personDAO.testBatchUpdate(get100PersonList2());
+        long after = System.currentTimeMillis();
+        System.out.println("Time Batch update Database: " + (after - before));
+    }
+
+    private List<Person> get100PersonList() {
+        List<Person> personList = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            Person person = new Person("firstName" + i,
+                    "lastName" + i, "patronymic" + i,
+                    20, "people" + i + "@.gmail.com", "Ukraine, Kiev, 123456");
+            personList.add(person);
+        }
+        return personList;
+    }
+
+    private List<Person> get100PersonList2() {
+        List<Person> personList = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            Person person = new Person("firstName2" + i,
+                    "lastName2" + i, "patronymic2" + i,
+                    20, "people2" + i + "@gmail.com", "Ukraine2, Kiev, 123456");
+            personList.add(person);
+        }
+        return personList;
     }
 
 }
