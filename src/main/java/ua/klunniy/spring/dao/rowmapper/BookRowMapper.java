@@ -1,6 +1,7 @@
-package ua.klunniy.spring.models;
+package ua.klunniy.spring.dao.rowmapper;
 
 import org.springframework.jdbc.core.RowMapper;
+import ua.klunniy.spring.models.Book;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

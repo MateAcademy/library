@@ -1,4 +1,4 @@
-package ua.klunniy.spring.models.hibernate2;
+package ua.klunniy.spring.hibernate.models.hibernate2;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

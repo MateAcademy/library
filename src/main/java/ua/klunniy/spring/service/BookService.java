@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ua.klunniy.spring.dao.BookDao;
-import ua.klunniy.spring.dao.impl.BookDaoJdbcTemplateImpl;
 import ua.klunniy.spring.models.Book;
 
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
 public class BookService {
 
     @Autowired
-    @Qualifier("bookDaoJdbcTemplateImpl")
+    @Qualifier("bookDao")
     private BookDao bookDao;
 //    private final BookDaoJdbcTemplateImpl bookDaoJdbcTemplateImpl;
 //

@@ -1,4 +1,4 @@
-package ua.klunniy.spring.dao.impl;
+package ua.klunniy.spring.dao.impl.jdbctemplate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -62,6 +62,8 @@ public class PersonDAO {
     }
 
     public void save(Person person) {
+//  jdbcTemplate.update("insert into Person values(1, ?, ?, ?)", person.getName(), person.getAge(),
+//                new Person;
         SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate)
                 .withTableName("person")
                 .usingGeneratedKeyColumns("person_id");
@@ -73,7 +75,6 @@ public class PersonDAO {
         parameters.put("age", person.getAge());
         parameters.put("email", person.getEmail());
         parameters.put("address", person.getAddress());
-
 
         Number generatedId = simpleJdbcInsert.executeAndReturnKey(parameters);
 

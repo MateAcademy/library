@@ -11,12 +11,12 @@ import ua.klunniy.spring.service.PersonService;
  */
 @Controller
 @RequestMapping("test-batch-update")
-public class ButchController {
+public class BatchController {
 
     private final PersonService personService;
 
     @Autowired
-    public ButchController(PersonService personService) {
+    public BatchController(PersonService personService) {
         this.personService = personService;
     }
 
@@ -27,6 +27,13 @@ public class ButchController {
 
     @GetMapping("without")
     public String withoutBatch() {
+        personService.testMultipleUpdate();
+        return "batch/index";
+    }
+
+    @GetMapping("with")
+    public String withBatch() {
+        personService.testBatchUpdate();
         return "batch/index";
     }
 

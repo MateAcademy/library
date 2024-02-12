@@ -1,4 +1,4 @@
-package ua.klunniy.spring.hibernate;
+package ua.klunniy.spring.jdbc;
 
 import ua.klunniy.spring.models.Book;
 import ua.klunniy.spring.util.DbConnector;

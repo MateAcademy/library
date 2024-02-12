@@ -1,4 +1,4 @@
-package ua.klunniy.spring.models.hibernate1;
+package ua.klunniy.spring.hibernate.models.hibernate1;
 
 import jakarta.persistence.*;
 import lombok.*;

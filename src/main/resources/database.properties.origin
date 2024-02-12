@@ -1,9 +1,10 @@
-Fore database.properties
+#For file database.properties:
 driver=
 url=
 username_value=
 password=
 
+#For file hibernate.properties:
 # Конфигурация нашего источника данных, конфигурация jdbc драйвера (Data source)
 hibernate.driver_class=
 hibernate.connection.url=

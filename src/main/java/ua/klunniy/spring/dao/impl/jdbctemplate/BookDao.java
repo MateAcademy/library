@@ -1,4 +1,4 @@
-package ua.klunniy.spring.dao.impl;
+package ua.klunniy.spring.dao.impl.jdbctemplate;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
-import ua.klunniy.spring.dao.BookDao;
 import ua.klunniy.spring.models.Book;
 import ua.klunniy.spring.dao.rowmapper.BookRowMapper;
 
@@ -21,20 +20,22 @@ import java.util.stream.Collectors;
  */
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BookDaoJdbcTemplateImpl implements BookDao {
+public class BookDao implements ua.klunniy.spring.dao.BookDao {
 
     final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public BookDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
+    public BookDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+//  что бы получить данные из таблицы мы используем метод query
     public List<Book> index() {
 //        return jdbcTemplate.query("SELECT * from Book", new BeanPropertyRowMapper<>(Book.class));
         return jdbcTemplate.query("SELECT * from Book order by book_id", new BookRowMapper());
     }
 
+//  что бы получить данные из таблицы мы используем метод query
     public List<Book> getListBooksByPersonId(Long personId) {
        return jdbcTemplate.query("SELECT * from Book where person_id=?", new Object[]{personId},
                         new BookRowMapper())
@@ -79,8 +80,7 @@ public class BookDaoJdbcTemplateImpl implements BookDao {
     }
 
     public void releaseTheBookFromThePerson(Long bookId) {
-        jdbcTemplate.update("UPDATE Book SET person_id=? where book_id=?",
-                null, bookId);
+        jdbcTemplate.update("UPDATE Book SET person_id=? where book_id=?", null, bookId);
     }
 
 
