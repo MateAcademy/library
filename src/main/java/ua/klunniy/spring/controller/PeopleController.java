@@ -9,7 +9,7 @@ import ua.klunniy.spring.models.Book;
 import ua.klunniy.spring.models.Person;
 import ua.klunniy.spring.service.BookService;
 import ua.klunniy.spring.service.PersonService;
-import ua.klunniy.spring.util.PersonValidator;
+import ua.klunniy.spring.util.validator.PersonValidator;
 
 import javax.validation.Valid;
 import java.util.List;

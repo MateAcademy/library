@@ -1,4 +1,4 @@
-package ua.klunniy.spring.util;
+package ua.klunniy.spring.util.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

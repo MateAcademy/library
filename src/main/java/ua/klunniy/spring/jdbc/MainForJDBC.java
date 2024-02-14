@@ -1,7 +1,7 @@
 package ua.klunniy.spring.jdbc;
 
 import ua.klunniy.spring.models.Book;
-import ua.klunniy.spring.util.DbConnector;
+import ua.klunniy.spring.util.db.DbConnector;
 
 import java.sql.*;
 import java.util.ArrayList;

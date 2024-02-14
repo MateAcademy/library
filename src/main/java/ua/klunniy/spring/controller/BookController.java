@@ -9,7 +9,7 @@ import ua.klunniy.spring.models.Book;
 import ua.klunniy.spring.models.Person;
 import ua.klunniy.spring.service.BookService;
 import ua.klunniy.spring.service.PersonService;
-import ua.klunniy.spring.util.BookValidator;
+import ua.klunniy.spring.util.validator.BookValidator;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -36,7 +36,6 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
     private final BookValidator bookValidator;
-
     private final PersonService personService;
 
     @Autowired
@@ -104,6 +103,12 @@ public class BookController {
     public String newBook(@ModelAttribute("book") Book book) {
         return "/book/new";
     }
+
+//    @GetMapping("/new")
+//    public String newBook(Model model) {
+//        model.addAttribute("book", new Book());
+//        return "/book/new";
+//    }
 
     @PostMapping("/new")
     public String createBook(@ModelAttribute("book") @Valid Book book,

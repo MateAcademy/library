@@ -35,6 +35,9 @@ public class BookService {
         return bookDao.show(bookId);
     }
 
+    public Book getBookByNaneAuthorYear(String nameBook, String author, int year) {
+        return bookDao.getBookByNaneAuthorYear(nameBook, author, year);
+    }
     public List<Book> getBooksByPersonId(Long personId) {
         if (personId == null) {
             return null;

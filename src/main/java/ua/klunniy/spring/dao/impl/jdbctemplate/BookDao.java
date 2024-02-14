@@ -83,13 +83,18 @@ public class BookDao implements ua.klunniy.spring.dao.BookDao {
         jdbcTemplate.update("UPDATE Book SET person_id=? where book_id=?", null, bookId);
     }
 
-
     public void delete(int id) {
         jdbcTemplate.update("DELETE from Book where book_id=?", id);
     }
 
     public void setPersonId(Long bookId, Long personId) {
         jdbcTemplate.update("UPDATE Book SET person_id=? where book_id=?", personId, bookId);
+    }
+
+    public Book getBookByNaneAuthorYear(String nameBook, String author, int year) {
+        return jdbcTemplate.query("SELECT * from Book where name_book=? and author=? and year = ?",
+                        new Object[]{nameBook, author, year}, new BookRowMapper())
+                .stream().findAny().orElse(null);
     }
 
 }

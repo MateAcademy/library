@@ -1,4 +1,4 @@
-package ua.klunniy.spring.util;
+package ua.klunniy.spring.util.db;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
