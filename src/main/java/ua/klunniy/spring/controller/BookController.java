@@ -112,14 +112,24 @@ public class BookController {
 
     @PostMapping("/new")
     public String createBook(@ModelAttribute("book") @Valid Book book,
-                             BindingResult bindingResult) {
-        bookValidator.validate(book, bindingResult);
-
+                             BindingResult bindingResult, Model model, HttpSession httpSession) {
         if (bindingResult.hasErrors()) {
             return "/book/new";
+        } else {
+            bookValidator.validate(book, bindingResult);
+            if (bindingResult.hasErrors()) {
+                return "/book/new";
+            }
         }
 
         bookService.save(book);
+
+        model.addAttribute("book", book);
+        model.addAttribute("condition", null);
+        List<Person> index = personService.index();
+        model.addAttribute("people", index );
+        model.addAttribute("person", new Person() );
+        httpSession.setAttribute("book", book);
         return "/book/show";
     }
 
@@ -133,10 +143,13 @@ public class BookController {
     public String updateBook(@ModelAttribute("book") @Valid Book book,
                              BindingResult bindingResult,
                              @PathVariable("id") long id) {
-        bookValidator.validate(book, bindingResult);
-
         if (bindingResult.hasErrors()) {
-            return "/book/edit";
+            return "/book/new";
+        } else {
+            bookValidator.validate(book, bindingResult);
+            if (bindingResult.hasErrors()) {
+                return "/book/new";
+            }
         }
 
         book.setBookId(id);

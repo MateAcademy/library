@@ -72,10 +72,13 @@ public class PeopleController {
     @PostMapping("/new")
     public String createPerson(@ModelAttribute("person") @Valid Person person,
                                BindingResult bindingResult) {
-        personValidator.validate(person, bindingResult);
-
         if (bindingResult.hasErrors()) {
-            return "/people/new";
+            return "/people/edit";
+        } else {
+            personValidator.validate(person, bindingResult);
+            if (bindingResult.hasErrors()) {
+                return "/people/edit";
+            }
         }
 
         personService.save(person);
@@ -85,7 +88,6 @@ public class PeopleController {
     @GetMapping("/{id}/edit")
     public String editPerson(Model model, @PathVariable("id") long id) {
         model.addAttribute("person", personService.show(id));
-
         return "/people/edit";
     }
 
@@ -93,10 +95,13 @@ public class PeopleController {
     public String updatePerson(@ModelAttribute("person") @Valid Person person,
                                BindingResult bindingResult,
                                @PathVariable("id") int id) {
-        personValidator.validate(person, bindingResult);
-
         if (bindingResult.hasErrors()) {
             return "/people/edit";
+        } else {
+            personValidator.validate(person, bindingResult);
+            if (bindingResult.hasErrors()) {
+                return "/people/edit";
+            }
         }
 
         personService.update(id, person);

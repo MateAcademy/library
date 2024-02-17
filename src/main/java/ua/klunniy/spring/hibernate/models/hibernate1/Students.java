@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.util.List;
 
-
 /**
  * @author Serhii Klunniy
  */
@@ -29,8 +28,8 @@ public class Students {
     @Column(name = "age")
     private Integer age;
 
-    @OneToMany(mappedBy = "owner")
-    @ToString.Exclude
+//    @OneToMany(mappedBy = "owner")
+//    @ToString.Exclude
     private List<Item> items;
 
     public Students(String name) {

@@ -66,4 +66,8 @@ public class BookDaoJdbcImpl implements BookDao {
 
     }
 
+    @Override
+    public Book getBookByNaneAuthorYear(String bookName, String author, int year) {
+        return null;
+    }
 }

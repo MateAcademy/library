@@ -23,9 +23,14 @@ public class Item {
     @Column(name = "item_name")
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "student_id", referencedColumnName = "student_id")
+//    @ManyToOne
+//    @JoinColumn(name = "student_id", referencedColumnName = "student_id")
+    @Transient
     private Students owner;
+
+    public Item(String name) {
+        this.name = name;
+    }
 
     public Item(String name, Students owner) {
         this.name = name;
