@@ -9,7 +9,7 @@ import ua.klunniy.spring.models.Book;
 import ua.klunniy.spring.models.Person;
 import ua.klunniy.spring.service.BookService;
 import ua.klunniy.spring.service.PersonService;
-import ua.klunniy.spring.util.BookValidator;
+import ua.klunniy.spring.util.validator.BookValidator;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -36,7 +36,6 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
     private final BookValidator bookValidator;
-
     private final PersonService personService;
 
     @Autowired
@@ -105,16 +104,32 @@ public class BookController {
         return "/book/new";
     }
 
+//    @GetMapping("/new")
+//    public String newBook(Model model) {
+//        model.addAttribute("book", new Book());
+//        return "/book/new";
+//    }
+
     @PostMapping("/new")
     public String createBook(@ModelAttribute("book") @Valid Book book,
-                             BindingResult bindingResult) {
-        bookValidator.validate(book, bindingResult);
-
+                             BindingResult bindingResult, Model model, HttpSession httpSession) {
         if (bindingResult.hasErrors()) {
             return "/book/new";
+        } else {
+            bookValidator.validate(book, bindingResult);
+            if (bindingResult.hasErrors()) {
+                return "/book/new";
+            }
         }
 
         bookService.save(book);
+
+        model.addAttribute("book", book);
+        model.addAttribute("condition", null);
+        List<Person> index = personService.index();
+        model.addAttribute("people", index );
+        model.addAttribute("person", new Person() );
+        httpSession.setAttribute("book", book);
         return "/book/show";
     }
 
@@ -128,10 +143,13 @@ public class BookController {
     public String updateBook(@ModelAttribute("book") @Valid Book book,
                              BindingResult bindingResult,
                              @PathVariable("id") long id) {
-        bookValidator.validate(book, bindingResult);
-
         if (bindingResult.hasErrors()) {
-            return "/book/edit";
+            return "/book/new";
+        } else {
+            bookValidator.validate(book, bindingResult);
+            if (bindingResult.hasErrors()) {
+                return "/book/new";
+            }
         }
 
         book.setBookId(id);

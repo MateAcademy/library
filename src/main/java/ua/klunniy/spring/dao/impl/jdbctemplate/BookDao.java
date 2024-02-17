@@ -1,4 +1,4 @@
-package ua.klunniy.spring.dao;
+package ua.klunniy.spring.dao.impl.jdbctemplate;
 
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
 import ua.klunniy.spring.models.Book;
-import ua.klunniy.spring.models.BookRowMapper;
+import ua.klunniy.spring.dao.rowmapper.BookRowMapper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,20 +20,22 @@ import java.util.stream.Collectors;
  */
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BookDAO {
+public class BookDao implements ua.klunniy.spring.dao.BookDao {
 
     final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public BookDAO(JdbcTemplate jdbcTemplate) {
+    public BookDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+//  что бы получить данные из таблицы мы используем метод query
     public List<Book> index() {
 //        return jdbcTemplate.query("SELECT * from Book", new BeanPropertyRowMapper<>(Book.class));
         return jdbcTemplate.query("SELECT * from Book order by book_id", new BookRowMapper());
     }
 
+//  что бы получить данные из таблицы мы используем метод query
     public List<Book> getListBooksByPersonId(Long personId) {
        return jdbcTemplate.query("SELECT * from Book where person_id=?", new Object[]{personId},
                         new BookRowMapper())
@@ -78,10 +80,8 @@ public class BookDAO {
     }
 
     public void releaseTheBookFromThePerson(Long bookId) {
-        jdbcTemplate.update("UPDATE Book SET person_id=? where book_id=?",
-                null, bookId);
+        jdbcTemplate.update("UPDATE Book SET person_id=? where book_id=?", null, bookId);
     }
-
 
     public void delete(int id) {
         jdbcTemplate.update("DELETE from Book where book_id=?", id);
@@ -89,6 +89,12 @@ public class BookDAO {
 
     public void setPersonId(Long bookId, Long personId) {
         jdbcTemplate.update("UPDATE Book SET person_id=? where book_id=?", personId, bookId);
+    }
+
+    public Book getBookByNaneAuthorYear(String nameBook, String author, int year) {
+        return jdbcTemplate.query("SELECT * from Book where name_book=? and author=? and year = ?",
+                        new Object[]{nameBook, author, year}, new BookRowMapper())
+                .stream().findAny().orElse(null);
     }
 
 }

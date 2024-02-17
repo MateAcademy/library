@@ -1,0 +1,17 @@
+#For file database.properties:
+driver=
+url=
+username_value=
+password=
+
+#For file hibernate.properties:
+# Конфигурация нашего источника данных, конфигурация jdbc драйвера (Data source)
+hibernate.driver_class=
+hibernate.connection.url=
+hibernate.connection.username=
+hibernate.connection.password=
+
+# Конфигурация  самого Hibernate(это ОRМ библиотека для работы с разными реляционными БД)
+hibernate.dialect=
+hibernate.show_sql=
+hibernate.current_session_context_class=

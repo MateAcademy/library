@@ -45,11 +45,10 @@
     </div>
 
     <hr/>
-    <a href="/people/">Страница со списком всех людей</a>
-    <br/>
+
     <br/>
 <!--    <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Редактировать этого человека</a>-->
-    <form th:action="@{/people/{id}/edit(id=${person.getId()})}" th:method="delete">
+    <form th:action="@{/people/{id}/edit(id=${person.getId()})}" >
         <button type="submit">Редактировать</button>
     </form>
     <p>
@@ -61,6 +60,7 @@
 
 <br/>
 <hr/>
+<h2 class="h2"><a href="/people/">Страница со списком всех людей</a></h2>
 <h2 class="h2"><a href="/">На главную страницу</a></h2>
 
 </body>
