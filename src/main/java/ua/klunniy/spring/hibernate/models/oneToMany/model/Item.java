@@ -1,4 +1,4 @@
-package ua.klunniy.spring.hibernate.models.hibernate1;
+package ua.klunniy.spring.hibernate.models.oneToMany.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,7 +12,7 @@ import lombok.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Item")
+@Table(name = "Item", schema = "hibernate1")
 public class Item {
 
     @Id
@@ -20,19 +20,14 @@ public class Item {
     @Column(name = "item_id")
     private long id;
 
-    @Column(name = "item_name")
+    @Column(name = "name")
     private String name;
 
-//    @ManyToOne
-//    @JoinColumn(name = "student_id", referencedColumnName = "student_id")
-    @Transient
-    private Students owner;
+    @ManyToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "person_id")
+    private Person owner;
 
-    public Item(String name) {
-        this.name = name;
-    }
-
-    public Item(String name, Students owner) {
+    public Item(String name, Person owner) {
         this.name = name;
         this.owner = owner;
     }

@@ -107,8 +107,8 @@ public class PersonService {
         List<Person> personList = new ArrayList<>();
         for (int i = 0; i < 100; i++) {
             Person person = new Person("firstName2" + i,
-                    "lastName2" + i, "patronymic2" + i,
-                    20, "people2" + i + "@gmail.com", "Ukraine2, Kiev, 123456");
+                    "lastName26" + i, "patronymic26" + i,
+                    20, "people26" + i + "@gmail.com", "Ukraine26, Kiev, 123456");
             personList.add(person);
         }
         return personList;

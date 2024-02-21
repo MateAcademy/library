@@ -1,39 +1,35 @@
-package ua.klunniy.spring.hibernate.models.hibernate1;
+package ua.klunniy.spring.hibernate.models.oneToMany.model;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
 
-/**
- * @author Serhii Klunniy
- */
 @Getter
 @Setter
 @Entity
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Students")
-public class Students {
+@Table(name = "Person", schema = "hibernate1")
+public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "student_id")
+    @Column(name = "person_id")
     private long id;
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "age")
-    private Integer age;
+    private String age;
 
-//    @OneToMany(mappedBy = "owner")
-//    @ToString.Exclude
+    @OneToMany(mappedBy = "owner")
     private List<Item> items;
 
-    public Students(String name) {
+    public Person(String name, String age) {
         this.name = name;
+        this.age = age;
     }
 
 }
