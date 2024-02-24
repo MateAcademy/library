@@ -32,4 +32,12 @@ public class Item {
         this.owner = owner;
     }
 
+    public Item(String name) {
+        this.name = name;
+    }
+
+    public Item(Person owner) {
+        this.owner = owner;
+    }
+
 }
