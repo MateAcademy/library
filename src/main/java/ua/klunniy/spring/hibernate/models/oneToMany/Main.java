@@ -21,20 +21,17 @@ public class Main {
 
         SessionFactory sessionFactory = configuration.buildSessionFactory();
         Session session = sessionFactory.getCurrentSession();
-        try {
+        try (sessionFactory) {
             session.beginTransaction();
 
             Person person = new Person("VVVr13", 33);
             Item item = new Item("VVVr13");
             person.addItem(item);
 
-//            session.persist(person);
-            session.save(person);
+            session.persist(person);
 
             session.getTransaction().commit();
 
-        } finally {
-            sessionFactory.close();
         }
     }
 
