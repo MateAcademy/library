@@ -21,8 +21,7 @@ public class Main {
 
         SessionFactory sessionFactory = configuration.buildSessionFactory();
         Session session = sessionFactory.getCurrentSession();
-        try {
-//          session = sessionFactory.openSession();
+        try (sessionFactory) {
             session.beginTransaction();
 
             Person newPerson = new Person("RR", 80);
@@ -54,4 +53,3 @@ public class Main {
 //System.out.println(item.getName());
 //System.out.println(item.getOwner().getName());
 
-//Создаю товар и сохраняю его в БД, добавляю пользователя в товар это связано с кешем
