@@ -1,6 +1,6 @@
 package ua.klunniy.spring.hibernate.models.hibernate2;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

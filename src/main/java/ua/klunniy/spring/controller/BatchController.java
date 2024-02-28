@@ -1,5 +1,7 @@
 package ua.klunniy.spring.controller;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +13,10 @@ import ua.klunniy.spring.service.PersonService;
  */
 @Controller
 @RequestMapping("/test-batch-update")
+@NoArgsConstructor
 public class BatchController {
 
-    private final PersonService personService;
+    private PersonService personService;
 
     @Autowired
     public BatchController(PersonService personService) {

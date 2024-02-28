@@ -16,12 +16,12 @@ public interface BookDao {
     Book show(long id);
 
 //todo: может быть этот метод удалить?
-    Optional<Book> show(String name);
+//    Optional<Book> show(String name);
     Optional<Book> show(String bookName, String author, int year);
     void save(Book book);
     void update(long id, Book updateBook);
     void releaseTheBookFromThePerson(Long bookId);
-    void delete(int id);
+    void delete(long id);
     void setPersonId(Long bookId, Long personId);
     Book getBookByNaneAuthorYear(String bookName, String author, int year);
 

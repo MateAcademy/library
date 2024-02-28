@@ -1,6 +1,9 @@
 package ua.klunniy.spring.hibernate.models.hibernate2;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

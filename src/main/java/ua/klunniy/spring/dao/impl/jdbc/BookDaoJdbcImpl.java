@@ -31,7 +31,6 @@ public class BookDaoJdbcImpl implements BookDao {
         return null;
     }
 
-    @Override
     public Optional<Book> show(String name) {
         return Optional.empty();
     }
@@ -43,7 +42,7 @@ public class BookDaoJdbcImpl implements BookDao {
 
     @Override
     public void save(Book book) {
-
+        System.out.println("jdbc");
     }
 
     @Override
@@ -57,7 +56,7 @@ public class BookDaoJdbcImpl implements BookDao {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
 
     }
 

@@ -15,7 +15,7 @@ import java.util.List;
 public class BookService {
 
     @Autowired
-    @Qualifier("bookDao")
+    @Qualifier("bookDaoHibernate")
     private BookDao bookDao;
 //    private final BookDaoJdbcTemplateImpl bookDaoJdbcTemplateImpl;
 //
@@ -69,7 +69,7 @@ public class BookService {
         }
     }
 
-    public void delete(int id) {
+    public void delete(long id) {
         bookDao.delete(id);
     }
 

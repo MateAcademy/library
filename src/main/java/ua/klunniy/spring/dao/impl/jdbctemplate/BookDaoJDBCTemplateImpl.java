@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
+import ua.klunniy.spring.dao.BookDao;
 import ua.klunniy.spring.models.Book;
 import ua.klunniy.spring.dao.rowmapper.BookRowMapper;
 
@@ -20,12 +21,12 @@ import java.util.stream.Collectors;
  */
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class BookDao implements ua.klunniy.spring.dao.BookDao {
+public class BookDaoJDBCTemplateImpl implements BookDao {
 
     final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public BookDao(JdbcTemplate jdbcTemplate) {
+    public BookDaoJDBCTemplateImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -83,7 +84,7 @@ public class BookDao implements ua.klunniy.spring.dao.BookDao {
         jdbcTemplate.update("UPDATE Book SET person_id=? where book_id=?", null, bookId);
     }
 
-    public void delete(int id) {
+    public void delete(long id) {
         jdbcTemplate.update("DELETE from Book where book_id=?", id);
     }
 

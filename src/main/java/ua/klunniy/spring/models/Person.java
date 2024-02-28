@@ -4,7 +4,10 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.proxy.HibernateProxy;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import javax.validation.constraints.*;
 import java.util.Objects;
 

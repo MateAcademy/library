@@ -17,11 +17,11 @@ import java.util.*;
  * @author Serhii Klunniy
  */
 @Component
-public class PersonDAO {
+public class PersonDAOJDBCTemplateImpl {
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public PersonDAO(JdbcTemplate jdbcTemplate) {
+    public PersonDAOJDBCTemplateImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

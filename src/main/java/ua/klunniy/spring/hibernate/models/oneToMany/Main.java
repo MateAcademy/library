@@ -8,7 +8,6 @@ import ua.klunniy.spring.hibernate.models.oneToMany.model.Person;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Serhii Klunniy

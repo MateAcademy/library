@@ -2,7 +2,7 @@ package ua.klunniy.spring.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.klunniy.spring.dao.impl.jdbctemplate.PersonDAO;
+import ua.klunniy.spring.dao.impl.jdbctemplate.PersonDAOJDBCTemplateImpl;
 import ua.klunniy.spring.models.Person;
 
 import java.util.ArrayList;
@@ -14,80 +14,80 @@ import java.util.Optional;
  */
 @Service
 public class PersonService {
-    private final PersonDAO personDAO;
+    private final PersonDAOJDBCTemplateImpl personDAOJDBCTemplateImpl;
 
     @Autowired
-    public PersonService(PersonDAO personDAO) {
-        this.personDAO = personDAO;
+    public PersonService(PersonDAOJDBCTemplateImpl personDAOJDBCTemplateImpl) {
+        this.personDAOJDBCTemplateImpl = personDAOJDBCTemplateImpl;
     }
 
     public List<Person> index() {
-        return personDAO.index();
+        return personDAOJDBCTemplateImpl.index();
     }
 
     public Person show(Long id) {
         if (id == null) {
             return null;
         }
-        return personDAO.show(id);
+        return personDAOJDBCTemplateImpl.show(id);
     }
 
     public boolean show(String firstName, String lastName, String patronymic) {
-        Person show = personDAO.show(firstName, lastName, patronymic);
+        Person show = personDAOJDBCTemplateImpl.show(firstName, lastName, patronymic);
         return show != null;
     }
 
     public Optional<Person> showByEmail(String email) {
-        return personDAO.showByEmail(email);
+        return personDAOJDBCTemplateImpl.showByEmail(email);
     }
 
     public Optional<Person> showByAddress(String address) {
-        return personDAO.showByAddress(address);
+        return personDAOJDBCTemplateImpl.showByAddress(address);
     }
 
     public Optional<Person> showByFirstName(String firstName) {
-        return personDAO.showByFirstName(firstName);
+        return personDAOJDBCTemplateImpl.showByFirstName(firstName);
     }
 
     public Optional<Person> showByLastName(String lastName) {
-        return personDAO.showByLastName(lastName);
+        return personDAOJDBCTemplateImpl.showByLastName(lastName);
     }
 
 
     public Optional<Person> showByPatronymic(String patronymic) {
-        return personDAO.showByPatronymic(patronymic);
+        return personDAOJDBCTemplateImpl.showByPatronymic(patronymic);
     }
 
     public void save(Person person) {
         if (person != null) {
-            personDAO.save(person);
+            personDAOJDBCTemplateImpl.save(person);
         }
     }
 
     public void update(int id, Person person) {
         if (person != null) {
-            personDAO.update(id, person);
+            personDAOJDBCTemplateImpl.update(id, person);
         }
     }
 
     public void delete(int id) {
-        personDAO.delete(id);
+        personDAOJDBCTemplateImpl.delete(id);
     }
 
     public Optional<Person> showSuchPerson(Person person) {
-        return personDAO.showSuchPerson(person);
+        return personDAOJDBCTemplateImpl.showSuchPerson(person);
     }
 
     public void testMultipleUpdate() {
         long before = System.currentTimeMillis();
-        personDAO.testMultipleUpdate(get100PersonList());
+        personDAOJDBCTemplateImpl.testMultipleUpdate(get100PersonList());
         long after = System.currentTimeMillis();
         System.out.println("Time multiple update Database: " + (after - before));
     }
 
     public void testBatchUpdate() {
         long before = System.currentTimeMillis();
-        personDAO.testBatchUpdate(get100PersonList2());
+        personDAOJDBCTemplateImpl.testBatchUpdate(get100PersonList2());
         long after = System.currentTimeMillis();
         System.out.println("Time Batch update Database: " + (after - before));
     }

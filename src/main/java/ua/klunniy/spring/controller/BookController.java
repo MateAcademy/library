@@ -158,9 +158,9 @@ public class BookController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteBook(@PathVariable("id") int id) {
+    public String deleteBook(@PathVariable("id") long id) {
         bookService.delete(id);
-        return "redirect:/book";
+        return "redirect:/books";
     }
 
 }

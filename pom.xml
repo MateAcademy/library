@@ -16,6 +16,7 @@
     <maven.compiler.target>11</maven.compiler.target>
     <spring.version>5.2.1.RELEASE</spring.version>
     <thymeleaf.version>3.0.11.RELEASE</thymeleaf.version>
+    <hibernate.version>5.4.28.Final</hibernate.version>
   </properties>
 
   <dependencies>
@@ -93,9 +94,9 @@
 
     <!--Эти зависимости для того что бы внедрить hibernate в наш проект    -->
     <dependency>
-      <groupId>org.hibernate.orm</groupId>
+      <groupId>org.hibernate</groupId>
       <artifactId>hibernate-core</artifactId>
-      <version>6.3.0.Final</version>
+      <version>${hibernate.version}</version>
     </dependency>
 
     <dependency>
