@@ -16,7 +16,7 @@ public class DbConnector {
 //    static final Logger logger = Logger.getLogger(DbConnector.class);
     private static final String URL = "jdbc:postgresql://localhost:5432/ava_db";
     private static final String USERNAME = "postgres";
-    private static final String PASSWORD = "test";
+    private static final String PASSWORD = "postgres";
 
     private Connection connection;
 

@@ -6,6 +6,8 @@ import org.hibernate.cfg.Configuration;
 import ua.klunniy.spring.hibernate.models.oneToMany.model.Item;
 import ua.klunniy.spring.hibernate.models.oneToMany.model.Person;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,23 +25,12 @@ public class Main {
 //          session = sessionFactory.openSession();
             session.beginTransaction();
 
-            //Это мы берем человека и выводим на экран
-            //Person person = session.get(Person.class, 1);
-            //System.out.println(person.getName());
-            //List<Item> items = person.getItems();
-            //System.out.println(items);
+            Person newPerson = new Person("RR", 80);
+            Item newItem = new Item("Item from Hibernate 80", newPerson);
 
-            //Это мы берем товар и выводим имя человека которому он принадлежит
-            //Item item = session.get(Item.class, 2);
-            //System.out.println(item.getName());
-            //System.out.println(item.getOwner().getName());
+            newPerson.setItems(new ArrayList<>(Collections.singletonList(newItem)));
 
-            //Создаю товар и сохраняю его в БД, добавляю пользователя в товар это связано с кешем
-            Person person = session.get(Person.class, 1);
-
-            Item newItem = new Item("Item from Hibernate", person);
-            person.getItems().add(newItem);
-
+            session.save(newPerson);
             session.save(newItem);
 
             session.getTransaction().commit();
@@ -50,3 +41,17 @@ public class Main {
     }
 
 }
+
+
+//Это мы берем человека и выводим на экран
+//Person person = session.get(Person.class, 1);
+//System.out.println(person.getName());
+//List<Item> items = person.getItems();
+//System.out.println(items);
+
+//Это мы берем товар и выводим имя человека которому он принадлежит
+//Item item = session.get(Item.class, 2);
+//System.out.println(item.getName());
+//System.out.println(item.getOwner().getName());
+
+//Создаю товар и сохраняю его в БД, добавляю пользователя в товар это связано с кешем

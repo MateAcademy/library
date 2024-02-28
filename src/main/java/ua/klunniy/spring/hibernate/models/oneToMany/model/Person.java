@@ -22,12 +22,12 @@ public class Person {
     private String name;
 
     @Column(name = "age")
-    private String age;
+    private Integer age;
 
     @OneToMany(mappedBy = "owner")
     private List<Item> items;
 
-    public Person(String name, String age) {
+    public Person(String name, Integer age) {
         this.name = name;
         this.age = age;
     }
