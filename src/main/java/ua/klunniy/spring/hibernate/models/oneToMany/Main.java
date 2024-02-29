@@ -32,9 +32,6 @@ public class Main {
             session.save(newItem);
 
             session.getTransaction().commit();
-
-        } finally {
-            sessionFactory.close();
         }
     }
 
