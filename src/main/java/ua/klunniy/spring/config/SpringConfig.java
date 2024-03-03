@@ -37,7 +37,7 @@ import java.util.Properties;
 @EnableWebMvc
 @ComponentScan("ua.klunniy.spring")
 @PropertySource({"classpath:database.properties",
-                 "classpath:hibernate.properties"})
+        "classpath:hibernate.properties"})
 @EnableJpaRepositories("ua.klunniy.spring.repositories")
 @EnableTransactionManagement
 public class SpringConfig implements WebMvcConfigurer {
@@ -101,34 +101,33 @@ public class SpringConfig implements WebMvcConfigurer {
         return new JdbcTemplate(dataSource());
     }
 
-//  Это для hibernate 3 метода
+    //  Это для hibernate 3 метода
     private Properties hibernateProperties() {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
         properties.put("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
-
         return properties;
     }
 
-//  Это для hibernate session - sessionFactory
-    @Bean
+    //  Это для hibernate session - sessionFactory
+    @Bean(name = "hibernateSessionFactory")
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setPackagesToScan("ua.klunniy.spring.models");
         sessionFactory.setHibernateProperties(hibernateProperties());
-
         return sessionFactory;
     }
 
-//    @Bean(name = "hibernateTransactionManager")
-    @Bean
+    @Bean(name = "hibernateTransactionManager")
     public PlatformTransactionManager hibernateTransactionManager() {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
         transactionManager.setSessionFactory(sessionFactory().getObject());
-
         return transactionManager;
     }
+
+}
+
 
 //  Это для jpa entity manager - entity manager factory  - sessionFactory
 // Настройки для Hibernate EntityManagerFactory
@@ -159,7 +158,7 @@ public class SpringConfig implements WebMvcConfigurer {
 //    }
 
 
-    // Настройки для Hibernate
+// Настройки для Hibernate
 //    @Bean(name = "hibernateTransactionManager")
 //    public PlatformTransactionManager hibernateTransactionManager(
 //            @Qualifier("hibernateEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
@@ -201,5 +200,5 @@ public class SpringConfig implements WebMvcConfigurer {
 //        return em;
 //    }
 
-}
+
 

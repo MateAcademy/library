@@ -3,7 +3,8 @@ package ua.klunniy.spring.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+//import org.springframework.transaction.annotation.Transactional;
+import javax.transaction.Transactional;
 import ua.klunniy.spring.dao.PeopleDao;
 import ua.klunniy.spring.dao.impl.jdbctemplate.PeopleDAOJDBCTemplateImpl;
 import ua.klunniy.spring.models.Person;
@@ -75,7 +76,7 @@ public class PeopleService {
 //        return personDao.showByPatronymic(patronymic);
 //    }
 
-    @Transactional
+//    @Transactional
     public void save(Person person) {
         if (person != null) {
             personDao.save(person);
@@ -83,7 +84,7 @@ public class PeopleService {
         }
     }
 
-    @Transactional
+//    @Transactional
     public void update(long id, Person person) {
         if (person != null) {
             personDao.update(id, person);
