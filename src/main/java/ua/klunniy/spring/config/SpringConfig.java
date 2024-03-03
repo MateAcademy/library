@@ -1,25 +1,31 @@
 package ua.klunniy.spring.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
+import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -32,6 +38,7 @@ import java.util.Properties;
 @ComponentScan("ua.klunniy.spring")
 @PropertySource({"classpath:database.properties",
                  "classpath:hibernate.properties"})
+@EnableJpaRepositories("ua.klunniy.spring.repositories")
 @EnableTransactionManagement
 public class SpringConfig implements WebMvcConfigurer {
     private final ApplicationContext applicationContext;
@@ -79,7 +86,7 @@ public class SpringConfig implements WebMvcConfigurer {
 //        return dataSource;
 //    }
 
-        @Bean
+    @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(environment.getRequiredProperty("driver"));
@@ -94,12 +101,7 @@ public class SpringConfig implements WebMvcConfigurer {
         return new JdbcTemplate(dataSource());
     }
 
-    // Используем Hibernate вместо JdbcTemplate
-//    @Bean
-//    public JdbcTemplate jdbcTemplate() {
-//        return new JdbcTemplate(dataSource());
-//    }
-
+//  Это для hibernate 3 метода
     private Properties hibernateProperties() {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
@@ -108,6 +110,7 @@ public class SpringConfig implements WebMvcConfigurer {
         return properties;
     }
 
+//  Это для hibernate session - sessionFactory
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -118,6 +121,7 @@ public class SpringConfig implements WebMvcConfigurer {
         return sessionFactory;
     }
 
+//    @Bean(name = "hibernateTransactionManager")
     @Bean
     public PlatformTransactionManager hibernateTransactionManager() {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
@@ -125,6 +129,77 @@ public class SpringConfig implements WebMvcConfigurer {
 
         return transactionManager;
     }
+
+//  Это для jpa entity manager - entity manager factory  - sessionFactory
+// Настройки для Hibernate EntityManagerFactory
+//    @Bean(name = "jpaEntityManagerFactory")
+//    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+//        final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+//        em.setDataSource(dataSource());
+//        em.setPackagesToScan("ua.klunniy.spring.models");
+//
+//        final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+//        em.setJpaVendorAdapter(vendorAdapter);
+//        em.setJpaProperties(hibernateProperties());
+//
+//        return em;
+//    }
+//
+//    @Bean(name = "jpaTransactionManager")
+//    public PlatformTransactionManager transactionManager() {
+//        JpaTransactionManager transactionManager = new JpaTransactionManager();
+//        transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
+//
+//        return transactionManager;
+//    }
+
+//    @Bean(name = "hibernateEntityManagerFactory")
+//    public LocalContainerEntityManagerFactoryBean hibernateEntityManagerFactory(DataSource dataSource) {
+//        // Конфигурация Hibernate EntityManagerFactory
+//    }
+
+
+    // Настройки для Hibernate
+//    @Bean(name = "hibernateTransactionManager")
+//    public PlatformTransactionManager hibernateTransactionManager(
+//            @Qualifier("hibernateEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+//        return new org.springframework.orm.hibernate5.HibernateTransactionManager(entityManagerFactory.unwrap(org.hibernate.SessionFactory.class));
+//    }
+//
+//    // Настройки для JPA
+//    @Bean(name = "jpaTransactionManager")
+//    public PlatformTransactionManager jpaTransactionManager(
+//            @Qualifier("jpaEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+//        return new JpaTransactionManager(entityManagerFactory);
+//    }
+//
+//    // Настройки для Hibernate EntityManagerFactory
+//    @Bean(name = "hibernateEntityManagerFactory")
+//    public LocalContainerEntityManagerFactoryBean hibernateEntityManagerFactory(DataSource dataSource) {
+//        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+//        em.setDataSource(dataSource);
+//        em.setPackagesToScan("ua.klunniy.spring.models"); // Пакеты, в которых находятся сущности Hibernate
+//        em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+//
+//        Properties hibernateProperties = new Properties();
+//        // Настройки Hibernate, если нужны
+//        em.setJpaProperties(hibernateProperties);
+//
+//        return em;
+//    }
+//
+//    // Настройки для JPA EntityManagerFactory
+//    @Bean(name = "jpaEntityManagerFactory")
+//    public LocalContainerEntityManagerFactoryBean jpaEntityManagerFactory(DataSource dataSource) {
+//        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+//        em.setDataSource(dataSource);
+//        em.setPackagesToScan("ua.klunniy.spring.models"); // Пакеты, в которых находятся сущности JPA
+//        em.setJpaVendorAdapter(new HibernateJpaVendorAdapter()); // Используем Hibernate JPA Vendor Adapter
+//
+//        // Дополнительные настройки JPA, если нужны
+//
+//        return em;
+//    }
 
 }
 

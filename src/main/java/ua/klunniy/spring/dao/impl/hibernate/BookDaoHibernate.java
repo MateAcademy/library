@@ -58,7 +58,6 @@ public class BookDaoHibernate implements BookDao {
 
     @Transactional(readOnly = true)
     public Optional<Book> show(String yourNameValue, String yourAuthorValue, int yourYearValue) {
-        System.out.println("hibernate");
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Book WHERE nameBook = :name AND author = :author AND year = :year";
         Query query = session.createQuery(hql);
@@ -80,6 +79,10 @@ public class BookDaoHibernate implements BookDao {
     @Transactional
     public void update(long id, Book updateBook) {
         Session session = sessionFactory.getCurrentSession();
+        Book book = session.get(Book.class, id);
+        book.setNameBook(updateBook.getNameBook());
+        book.setAuthor(updateBook.getAuthor());
+        book.setYear(updateBook.getYear());
 //        String hql = "UPDATE Book SET nameBook = :name, author = :author, year = :year WHERE bookId = :bookId";
 //        Query query = session.createQuery(hql);
 //        query.setParameter("name", updateBook.getNameBook());
@@ -87,11 +90,6 @@ public class BookDaoHibernate implements BookDao {
 //        query.setParameter("year", updateBook.getYear());
 //        query.setParameter("bookId", id);
 //        query.executeUpdate();
-
-        Book book = session.get(Book.class, id);
-        book.setNameBook(updateBook.getNameBook());
-        book.setAuthor(updateBook.getAuthor());
-        book.setYear(updateBook.getYear());
     }
 
     @Transactional

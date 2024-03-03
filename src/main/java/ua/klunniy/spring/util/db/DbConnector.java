@@ -40,9 +40,9 @@ public class DbConnector {
     private void initMethod() {
         Connection connection = getConnection();
         if (connection != null) {
-            System.out.println("Doing my initialization");
+            System.out.println("Info in DbConnector.class: Doing my initialization");
         } else {
-            System.out.println("Doing my initialization ERROR with connection");
+            System.err.println("Error in DbConnector.class: \"Doing my initialization ERROR with connection\"");
         }
     }
 

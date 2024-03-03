@@ -16,7 +16,6 @@ import java.util.Objects;
  */
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "Person")
 @AllArgsConstructor

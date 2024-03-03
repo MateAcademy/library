@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.klunniy.spring.models.Book;
 import ua.klunniy.spring.models.Person;
 import ua.klunniy.spring.service.BookService;
-import ua.klunniy.spring.service.PersonService;
+import ua.klunniy.spring.service.PeopleService;
 import ua.klunniy.spring.util.validator.PersonValidator;
 
 import javax.validation.Valid;
@@ -16,44 +16,43 @@ import java.util.List;
 
 /**
  * REST описывает то какие URLы и HTTP методы у нас должны быть для взаимодействия с данными
- *
- *
- *   С GET запросом вот по этому URL мы получим все записи:
- *   GET     /posts               Получаем все записи(READ)
- *
- *   GET     /posts/:id          Получаем одну запись(READ)
- *   DELETE  /posts/:id          Удаляем запись(DELETE)
- *
- *   GET     /posts/new           HTML форма создания записи
- *   POST    /posts               Создаем новую запись(CREATE)
- *
- *   GET     /posts/:id/edit     HTML форма редактирования записи
- *   PATCH   /posts/:id          Обновляем запись(UPDATE)
- *
- * */
+ * <p>
+ * <p>
+ * С GET запросом вот по этому URL мы получим все записи:
+ * GET     /posts               Получаем все записи(READ)
+ * <p>
+ * GET     /posts/:id          Получаем одну запись(READ)
+ * DELETE  /posts/:id          Удаляем запись(DELETE)
+ * <p>
+ * GET     /posts/new           HTML форма создания записи
+ * POST    /posts               Создаем новую запись(CREATE)
+ * <p>
+ * GET     /posts/:id/edit     HTML форма редактирования записи
+ * PATCH   /posts/:id          Обновляем запись(UPDATE)
+ */
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
-    private final PersonService personService;
+    private final PeopleService peopleService;
     private final BookService bookService;
     private final PersonValidator personValidator;
 
     @Autowired
-    public PeopleController(PersonService personService, BookService bookService, PersonValidator personValidator) {
-        this.personService = personService;
+    public PeopleController(PeopleService peopleService, BookService bookService, PersonValidator personValidator) {
+        this.peopleService = peopleService;
         this.bookService = bookService;
         this.personValidator = personValidator;
     }
 
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("people", personService.index());
+        model.addAttribute("people", peopleService.index());
         return "/people/index";
     }
 
     @GetMapping("/{id}")
     public String showPersonById(@PathVariable("id") long personId, Model model) {
-        model.addAttribute("person", personService.show(personId));
+        model.addAttribute("person", peopleService.show(personId));
         List<Book> bookList = bookService.getBooksByPersonId(personId);
         if (bookList.isEmpty()) {
             model.addAttribute("condition", null);
@@ -73,44 +72,54 @@ public class PeopleController {
     public String createPerson(@ModelAttribute("person") @Valid Person person,
                                BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "/people/edit";
-        } else {
-            personValidator.validate(person, bindingResult);
-            if (bindingResult.hasErrors()) {
-                return "/people/edit";
-            }
+            return "/people/new";
         }
 
-        personService.save(person);
+        try {
+            personValidator.validate(person, bindingResult);
+            if (bindingResult.hasErrors()) {
+                return "/people/new";
+            }
+            peopleService.save(person);
+        } catch (Exception e) {
+            System.out.println("Error in createPerson");
+            return "/people/new";
+        }
+
         return "/people/show";
     }
 
     @GetMapping("/{id}/edit")
     public String editPerson(Model model, @PathVariable("id") long id) {
-        model.addAttribute("person", personService.show(id));
+        model.addAttribute("person", peopleService.show(id));
         return "/people/edit";
     }
 
     @PatchMapping("/{id}")
     public String updatePerson(@ModelAttribute("person") @Valid Person person,
                                BindingResult bindingResult,
-                               @PathVariable("id") int id) {
+                               @PathVariable("id") long id) {
         if (bindingResult.hasErrors()) {
             return "/people/edit";
-        } else {
+        }
+
+        try {
             personValidator.validate(person, bindingResult);
             if (bindingResult.hasErrors()) {
                 return "/people/edit";
             }
+        } catch (Exception e) {
+            System.out.println("Error in createPerson");
+            return "/people/edit";
         }
 
-        personService.update(id, person);
+        peopleService.update(id, person);
         return "/people/show";
     }
 
     @DeleteMapping("/{id}")
     public String deletePerson(@PathVariable("id") int id) {
-        personService.delete(id);
+        peopleService.delete(id);
         return "redirect:/people";
     }
 

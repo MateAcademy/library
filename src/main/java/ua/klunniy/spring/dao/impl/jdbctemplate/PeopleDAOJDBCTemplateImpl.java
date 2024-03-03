@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Component;
+import ua.klunniy.spring.dao.PeopleDao;
 import ua.klunniy.spring.models.Person;
 import ua.klunniy.spring.dao.rowmapper.PersonRowMapper;
 
@@ -17,11 +18,11 @@ import java.util.*;
  * @author Serhii Klunniy
  */
 @Component
-public class PersonDAOJDBCTemplateImpl {
+public class PeopleDAOJDBCTemplateImpl implements PeopleDao {
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public PersonDAOJDBCTemplateImpl(JdbcTemplate jdbcTemplate) {
+    public PeopleDAOJDBCTemplateImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -84,14 +85,14 @@ public class PersonDAOJDBCTemplateImpl {
         person.setId(generatedId.longValue());
     }
 
-    public void update(int id, Person updatePerson) {
+    public void update(long id, Person updatePerson) {
         jdbcTemplate.update("UPDATE Person SET first_name=?, last_name=?, patronymic=?, age=?, email=?, address=? " +
                         "where person_id=?",
                 updatePerson.getFirstName(), updatePerson.getLastName(), updatePerson.getPatronymic(),
                 updatePerson.getAge(), updatePerson.getEmail(), updatePerson.getAddress(), id);
     }
 
-    public void delete(int id) {
+    public void delete(long id) {
         jdbcTemplate.update("DELETE from Person where person_id=?", id);
     }
 

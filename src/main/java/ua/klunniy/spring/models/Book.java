@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 /**
  * @author Serhii Klunniy
  */
+
 @Getter
 @Setter
 @NoArgsConstructor

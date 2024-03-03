@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ua.klunniy.spring.models.Book;
 import ua.klunniy.spring.models.Person;
 import ua.klunniy.spring.service.BookService;
-import ua.klunniy.spring.service.PersonService;
+import ua.klunniy.spring.service.PeopleService;
 import ua.klunniy.spring.util.validator.BookValidator;
 
 import javax.servlet.http.HttpSession;
@@ -36,13 +36,13 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
     private final BookValidator bookValidator;
-    private final PersonService personService;
+    private final PeopleService peopleService;
 
     @Autowired
-    public BookController(BookService bookService, BookValidator bookValidator, PersonService personService) {
+    public BookController(BookService bookService, BookValidator bookValidator, PeopleService peopleService) {
         this.bookService = bookService;
         this.bookValidator = bookValidator;
-        this.personService = personService;
+        this.peopleService = peopleService;
     }
 
     @GetMapping
@@ -57,12 +57,12 @@ public class BookController {
         model.addAttribute("book", book);
         Long personIdWhoGetTheBook = book.getPersonId();
         if (personIdWhoGetTheBook != null) {
-            Person personWhoGetThisBook = personService.show(personIdWhoGetTheBook);
+            Person personWhoGetThisBook = peopleService.show(personIdWhoGetTheBook);
             model.addAttribute("person", personWhoGetThisBook);
             model.addAttribute("condition", "people present");
         } else {
             model.addAttribute("condition", null);
-            List<Person> index = personService.index();
+            List<Person> index = peopleService.index();
             model.addAttribute("people", index );
             model.addAttribute("person", new Person() );
             httpSession.setAttribute("book", book);
@@ -77,7 +77,7 @@ public class BookController {
         Book book = bookService.getBookById(bookId);
         model.addAttribute("book", book);
         model.addAttribute("condition", null);
-        List<Person> index = personService.index();
+        List<Person> index = peopleService.index();
         model.addAttribute("people", index );
         model.addAttribute("person", new Person() );
         httpSession.setAttribute("book", book);
@@ -93,7 +93,7 @@ public class BookController {
         bookService.setPersonId(book.getBookId(), personId);
         book.setPersonId(personId);
         model.addAttribute("book", book);
-        Person personWhoGetThisBook = personService.show(personId);
+        Person personWhoGetThisBook = peopleService.show(personId);
         model.addAttribute("person", personWhoGetThisBook);
         model.addAttribute("condition", "people present");
         return "/book/show";
@@ -126,7 +126,7 @@ public class BookController {
 
         model.addAttribute("book", book);
         model.addAttribute("condition", null);
-        List<Person> index = personService.index();
+        List<Person> index = peopleService.index();
         model.addAttribute("people", index );
         model.addAttribute("person", new Person() );
         httpSession.setAttribute("book", book);
@@ -144,11 +144,11 @@ public class BookController {
                              BindingResult bindingResult,
                              @PathVariable("id") long id) {
         if (bindingResult.hasErrors()) {
-            return "/book/new";
+            return "/book/edit";
         } else {
-            bookValidator.validate(book, bindingResult);
+//            bookValidator.validate(book, bindingResult);
             if (bindingResult.hasErrors()) {
-                return "/book/new";
+                return "/book/edit";
             }
         }
 

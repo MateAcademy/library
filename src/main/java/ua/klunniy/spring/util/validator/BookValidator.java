@@ -37,17 +37,15 @@ public class BookValidator implements Validator {
 
         Book bookFromDb = bookService.getBookByNaneAuthorYear(bookName, author, year);
 
-        if (bookFromDb != null) {
+//        if (bookFromDb != null) {
+//
+//        } else {
+//
+//        }
 
-        } else {
-
-        }
-
-
-
-        if (bookService.getBookById(bookName, author, year) != null) {
-            errors.rejectValue("name", "", "In db is present such book name");
-        }
+//        if (bookService.getBookById(bookName, author, year) != null) {
+//            errors.rejectValue("name", "", "In db is present such book name");
+//        }
 
     }
 

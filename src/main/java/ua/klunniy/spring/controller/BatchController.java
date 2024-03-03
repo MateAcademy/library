@@ -1,12 +1,11 @@
 package ua.klunniy.spring.controller;
 
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ua.klunniy.spring.service.PersonService;
+import ua.klunniy.spring.service.PeopleService;
 
 /**
  * @author Serhii Klunniy
@@ -16,11 +15,11 @@ import ua.klunniy.spring.service.PersonService;
 @NoArgsConstructor
 public class BatchController {
 
-    private PersonService personService;
+    private PeopleService peopleService;
 
     @Autowired
-    public BatchController(PersonService personService) {
-        this.personService = personService;
+    public BatchController(PeopleService peopleService) {
+        this.peopleService = peopleService;
     }
 
     @GetMapping
@@ -30,13 +29,13 @@ public class BatchController {
 
     @GetMapping("/without")
     public String withoutBatch() {
-        personService.testMultipleUpdate();
+        peopleService.testMultipleUpdate();
         return "batch/index";
     }
 
     @GetMapping("/with")
     public String withBatch() {
-        personService.testBatchUpdate();
+        peopleService.testBatchUpdate();
         return "batch/index";
     }
 

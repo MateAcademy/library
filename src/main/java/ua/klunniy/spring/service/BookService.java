@@ -17,6 +17,7 @@ public class BookService {
     @Autowired
     @Qualifier("bookDaoHibernate")
     private BookDao bookDao;
+
 //    private final BookDaoJdbcTemplateImpl bookDaoJdbcTemplateImpl;
 //
 //    @Autowired
