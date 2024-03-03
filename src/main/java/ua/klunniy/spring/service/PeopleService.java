@@ -45,9 +45,9 @@ public class PeopleService {
         if (id == null) {
             return null;
         }
-        return personDao.show(id);
-       // Optional<Person> byId = peopleRepository.findById(id);
-       // return byId.orElse(null);
+       // return personDao.show(id);
+        Optional<Person> byId = peopleRepository.findById(id);
+        return byId.orElse(null);
     }
 
     public boolean show(String firstName, String lastName, String patronymic) {
@@ -76,25 +76,27 @@ public class PeopleService {
 //        return personDao.showByPatronymic(patronymic);
 //    }
 
-//    @Transactional
+    @Transactional
     public void save(Person person) {
         if (person != null) {
-            personDao.save(person);
-           // peopleRepository.save(person);
+            //personDao.save(person);
+           peopleRepository.save(person);
         }
     }
 
-//    @Transactional
+    @Transactional
     public void update(long id, Person person) {
         if (person != null) {
-            personDao.update(id, person);
-//            person.setId(id);
-//            peopleRepository.save(person);
+            //personDao.update(id, person);
+            person.setId(id);
+            peopleRepository.save(person);
         }
     }
 
-    public void delete(int id) {
-        personDao.delete(id);
+    @Transactional
+    public void delete(long id) {
+        //personDao.delete(id);
+        peopleRepository.deleteById(id);
     }
 
     public Optional<Person> showSuchPerson(Person person) {
