@@ -126,24 +126,21 @@ public class SpringConfig implements WebMvcConfigurer {
         return transactionManager;
     }
 
-}
-
-
 //  Это для jpa entity manager - entity manager factory  - sessionFactory
-// Настройки для Hibernate EntityManagerFactory
-//    @Bean(name = "jpaEntityManagerFactory")
-//    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-//        final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-//        em.setDataSource(dataSource());
-//        em.setPackagesToScan("ua.klunniy.spring.models");
-//
-//        final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-//        em.setJpaVendorAdapter(vendorAdapter);
-//        em.setJpaProperties(hibernateProperties());
-//
-//        return em;
-//    }
-//
+ //Настройки для Hibernate EntityManagerFactory
+    @Bean
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+        final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(dataSource());
+        em.setPackagesToScan("ua.klunniy.spring.models");
+
+        final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        em.setJpaVendorAdapter(vendorAdapter);
+        em.setJpaProperties(hibernateProperties());
+
+        return em;
+    }
+
 //    @Bean(name = "jpaTransactionManager")
 //    public PlatformTransactionManager transactionManager() {
 //        JpaTransactionManager transactionManager = new JpaTransactionManager();
@@ -151,6 +148,11 @@ public class SpringConfig implements WebMvcConfigurer {
 //
 //        return transactionManager;
 //    }
+
+}
+
+
+
 
 //    @Bean(name = "hibernateEntityManagerFactory")
 //    public LocalContainerEntityManagerFactoryBean hibernateEntityManagerFactory(DataSource dataSource) {
