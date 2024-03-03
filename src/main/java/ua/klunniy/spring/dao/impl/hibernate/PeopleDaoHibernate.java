@@ -29,13 +29,13 @@ public class PeopleDaoHibernate implements PeopleDao {
         this.sessionFactory = sessionFactory;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
     public List<Person> index() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from Person", Person.class).getResultList();
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
     public Person show(long id) {
         Session session = sessionFactory.getCurrentSession();
 //        String hql = "FROM Book WHERE bookId = :book_id";
@@ -45,7 +45,7 @@ public class PeopleDaoHibernate implements PeopleDao {
         return session.get(Person.class, id);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
     public Person show(String firstName, String lastName, String patronymic) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Person WHERE firstName = :firstName AND lastName = :lastName AND patronymic = :patronymic";
@@ -58,7 +58,7 @@ public class PeopleDaoHibernate implements PeopleDao {
         return person;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
     public Optional<Person> showByEmail(String email) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "SELECT p from Person p where email=:email";
@@ -70,7 +70,7 @@ public class PeopleDaoHibernate implements PeopleDao {
 
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
     public Optional<Person> showByAddress(String address) {
 //        return jdbcTemplate.query("SELECT * from Person where address=?", new Object[]{address},
 //                new PersonRowMapper()).stream().findAny();
@@ -101,13 +101,13 @@ public class PeopleDaoHibernate implements PeopleDao {
 //    }
 
     @Override
-    @Transactional
+    @Transactional(transactionManager = "hibernateTransactionManager")
     public void save(Person person) {
         Session session = sessionFactory.getCurrentSession();
         session.save(person);
     }
 
-    @Transactional
+    @Transactional(transactionManager = "hibernateTransactionManager")
     public void update(long id, Person updatePerson) {
         Session session = sessionFactory.getCurrentSession();
         Person person = session.get(Person.class, id);
@@ -118,7 +118,7 @@ public class PeopleDaoHibernate implements PeopleDao {
         person.setEmail(updatePerson.getEmail());
     }
 
-    @Transactional
+    @Transactional(transactionManager = "hibernateTransactionManager")
     public void delete(long id) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(session.get(Person.class, id));

@@ -3,42 +3,42 @@ package ua.klunniy.spring.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Transactional;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+//import javax.transaction.Transactional;
 import ua.klunniy.spring.dao.PeopleDao;
 import ua.klunniy.spring.dao.impl.jdbctemplate.PeopleDAOJDBCTemplateImpl;
 import ua.klunniy.spring.models.Person;
+import ua.klunniy.spring.repositories.PeopleRepository;
 //import ua.klunniy.spring.repositories.PeopleRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
  * @author Serhii Klunniy
  */
 @Service
-//@Transactional(readOnly = true)
+@Transactional(readOnly = true)
 public class PeopleService {
 
     //В один сервисный класс может быть внедрено несколько Дао репозиториев
     private final PeopleDao personDao;
-//    private final PeopleRepository peopleRepository;
+    private final PeopleRepository peopleRepository;
     private final PeopleDAOJDBCTemplateImpl personDAOJDBCTemplateImpl;
 
     @Autowired
     public PeopleService(PeopleDAOJDBCTemplateImpl personDAOJDBCTemplateImpl,
-                         @Qualifier("peopleDaoHibernate") PeopleDao personDao
-                        ) {
+                         @Qualifier("peopleDaoHibernate") PeopleDao personDao,
+                         PeopleRepository peopleRepository) {
         this.personDAOJDBCTemplateImpl = personDAOJDBCTemplateImpl;
         this.personDao = personDao;
-//        this.peopleRepository = peopleRepository1;
+        this.peopleRepository = peopleRepository;
     }
 
     public List<Person> index() {
-        return personDao.index();
-//        return peopleRepository.findAll();
+        //return personDao.index();
+        return peopleRepository.findAll();
     }
 
     public Person show(Long id) {

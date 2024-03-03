@@ -30,14 +30,14 @@ public class BookDaoHibernate implements BookDao {
     }
 
     //  что бы получить данные из таблицы мы используем метод query
-    @Transactional(readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
     public List<Book> index() {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from Book", Book.class).getResultList();
     }
 
     //  что бы получить данные из таблицы мы используем метод query
-    @Transactional(readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
     public List<Book> getListBooksByPersonId(Long personId) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Book WHERE personId = :person_id";
@@ -47,7 +47,7 @@ public class BookDaoHibernate implements BookDao {
         return books;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
     public Book show(long myBookIdValue) {
         Session session = sessionFactory.getCurrentSession();
 //        String hql = "FROM Book WHERE bookId = :book_id";
@@ -57,7 +57,7 @@ public class BookDaoHibernate implements BookDao {
         return session.get(Book.class, myBookIdValue);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(transactionManager = "hibernateTransactionManager", readOnly = true)
     public Optional<Book> show(String yourNameValue, String yourAuthorValue, int yourYearValue) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "FROM Book WHERE nameBook = :name AND author = :author AND year = :year";
@@ -71,13 +71,13 @@ public class BookDaoHibernate implements BookDao {
         return bookOptional;
     }
 
-    @Transactional
+    @Transactional(transactionManager = "hibernateTransactionManager")
     public void save(Book book) {
         Session session = sessionFactory.getCurrentSession();
         session.save(book);
     }
 
-    @Transactional
+    @Transactional(transactionManager = "hibernateTransactionManager")
     public void update(long id, Book updateBook) {
         Session session = sessionFactory.getCurrentSession();
         Book book = session.get(Book.class, id);
@@ -93,7 +93,7 @@ public class BookDaoHibernate implements BookDao {
 //        query.executeUpdate();
     }
 
-    @Transactional
+    @Transactional(transactionManager = "hibernateTransactionManager")
     public void releaseTheBookFromThePerson(Long bookId) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "UPDATE Book SET personId = :personId WHERE bookId = :bookId";
@@ -103,7 +103,7 @@ public class BookDaoHibernate implements BookDao {
         query.executeUpdate();
     }
 
-    @Transactional
+    @Transactional(transactionManager = "hibernateTransactionManager")
     public void delete(long idBook) {
         Session session = sessionFactory.getCurrentSession();
 //        String sql = "DELETE FROM Book WHERE bookId = :bookId";
@@ -113,7 +113,7 @@ public class BookDaoHibernate implements BookDao {
         session.remove(session.get(Book.class, idBook));
     }
 
-    @Transactional
+    @Transactional(transactionManager = "hibernateTransactionManager")
     public void setPersonId(Long bookId, Long personId) {
         Session session = sessionFactory.getCurrentSession();
         String sql = "UPDATE Book SET personId = :person_id where bookId = :book_id";
@@ -123,7 +123,7 @@ public class BookDaoHibernate implements BookDao {
         query.executeUpdate();
     }
 
-    @Transactional
+    @Transactional(transactionManager = "hibernateTransactionManager")
     public Book getBookByNaneAuthorYear(String nameBook, String author, int year) {
         Session session = sessionFactory.getCurrentSession();
         String hql = "SELECT b from Book b where nameBook= :name_book and author= :author and year =:year";
