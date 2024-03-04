@@ -39,7 +39,6 @@ public class PersonValidator implements Validator {
                 errors.rejectValue("email", "", "Error, this email is present in database");
             }
 
-
         } else {
             //update - значит обновляю нового пользователя
             Person personFromDb = peopleService.show(person.getId());

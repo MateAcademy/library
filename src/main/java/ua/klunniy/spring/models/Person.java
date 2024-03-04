@@ -2,6 +2,7 @@ package ua.klunniy.spring.models;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.proxy.HibernateProxy;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import javax.validation.constraints.*;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -49,19 +51,33 @@ public class Person {
     @Column(name = "email")
     @NotEmpty(message = "Email should not be empty")
     @Size(min = 2, max = 30, message = "Email should be between 2 and 30 characters")
-    @Email(message ="Email should be valid")
+    @Email(message = "Email should be valid")
     String email;
 
-//Страна, Город, Индекс(6 цифр)
+    //Страна, Город, Индекс(6 цифр)
     @NotEmpty(message = "Address should not be empty")
     @Size(min = 6, max = 30, message = "Address should be between 6 and 30 characters")
     @Pattern(regexp = "[A-Z]\\w+, [A-Z]\\w+, \\d{6}", message = "Your address should be in this format: Country, City, Postal Code (6 digits)")
     String address;
 
+    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
+   // @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    List<Book> bookList;
+
     public Person() {
     }
 
     public Person(String firstName, String lastName, String patronymic, int age, String email, String address) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.patronymic = patronymic;
+        this.age = age;
+        this.email = email;
+        this.address = address;
+    }
+
+    public Person(long personId, String firstName, String lastName, String patronymic, int age, String email, String address) {
+        this.id = personId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.patronymic = patronymic;
@@ -84,6 +100,19 @@ public class Person {
     @Override
     public final int hashCode() {
         return getClass().hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                ", age=" + age +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                '}';
     }
 
 }

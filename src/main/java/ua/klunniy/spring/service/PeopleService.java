@@ -37,7 +37,7 @@ public class PeopleService {
     }
 
     public List<Person> index() {
-        //return personDao.index();
+       // return personDao.index();
         return peopleRepository.findAll();
     }
 
@@ -48,6 +48,10 @@ public class PeopleService {
        // return personDao.show(id);
         Optional<Person> byId = peopleRepository.findById(id);
         return byId.orElse(null);
+    }
+
+    private List<Person> findByName(String name) {
+        return peopleRepository.findByFirstName(name);
     }
 
     public boolean show(String firstName, String lastName, String patronymic) {

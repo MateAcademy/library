@@ -27,7 +27,7 @@ public class Book {
     @Column(name = "book_id")
     Long bookId;
 
-    @Column(name = "person_id")
+    @Column(name = "person_id", insertable = false, updatable = false)
     Long personId;
 
     @NotEmpty(message = "Book name should not be empty")
@@ -44,6 +44,10 @@ public class Book {
     @Column(name = "year")
     int year;
 
+    @ManyToOne
+    @JoinColumn(name = "person_id", referencedColumnName = "person_id")
+    Person person;
+
     public Book(String nameBook, String author, int year) {
         this.nameBook = nameBook;
         this.author = author;
@@ -52,6 +56,14 @@ public class Book {
 
     public Book(Long personId, String nameBook, String author, int year) {
         this.personId = personId;
+        this.nameBook = nameBook;
+        this.author = author;
+        this.year = year;
+    }
+
+    public Book(long bookId, long personId, String nameBook, String author, int year) {
+        this.bookId = bookId;
+        this.personId= personId;
         this.nameBook = nameBook;
         this.author = author;
         this.year = year;
