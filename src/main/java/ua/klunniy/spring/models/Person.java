@@ -4,12 +4,14 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.proxy.HibernateProxy;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import javax.validation.constraints.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -60,8 +62,17 @@ public class Person {
     @Pattern(regexp = "[A-Z]\\w+, [A-Z]\\w+, \\d{6}", message = "Your address should be in this format: Country, City, Postal Code (6 digits)")
     String address;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.EAGER)
-   // @Cascade(org.hibernate.annotations.CascadeType.ALL)
+    @Column(name = "date_of_birth")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yy")
+    Date dateOfBirth;
+
+    @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    Date createdAt;
+
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    // @Cascade(org.hibernate.annotations.CascadeType.ALL)
     List<Book> bookList;
 
     public Person() {

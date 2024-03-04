@@ -57,7 +57,7 @@ public class BookController {
         model.addAttribute("book", book);
         Long personIdWhoGetTheBook = book.getPersonId();
         if (personIdWhoGetTheBook != null) {
-            Person personWhoGetThisBook = peopleService.show(personIdWhoGetTheBook);
+            Person personWhoGetThisBook = book.getPerson() ;
             model.addAttribute("person", personWhoGetThisBook);
             model.addAttribute("condition", "people present");
         } else {

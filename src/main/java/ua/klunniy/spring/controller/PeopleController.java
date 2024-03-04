@@ -34,13 +34,11 @@ import java.util.List;
 @RequestMapping("/people")
 public class PeopleController {
     private final PeopleService peopleService;
-    private final BookService bookService;
     private final PersonValidator personValidator;
 
     @Autowired
-    public PeopleController(PeopleService peopleService, BookService bookService, PersonValidator personValidator) {
+    public PeopleController(PeopleService peopleService, PersonValidator personValidator) {
         this.peopleService = peopleService;
-        this.bookService = bookService;
         this.personValidator = personValidator;
     }
 
@@ -54,7 +52,7 @@ public class PeopleController {
     public String showPersonById(@PathVariable("id") long personId, Model model) {
         Person show = peopleService.show(personId);
         model.addAttribute("person", show);
-        List<Book> bookList = bookService.getBooksByPersonId(personId);
+        List<Book> bookList = show.getBookList();
         if (bookList.isEmpty()) {
             model.addAttribute("condition", null);
         } else {
@@ -126,29 +124,3 @@ public class PeopleController {
 
 }
 
-//    @GetMapping("/new")
-//    public String newPeople(Model model) {
-//        model.addAttribute("person", new Person());
-//        return "/people/new";
-//    }
-
-
-// create
-//    @PostMapping()
-//    public String addNewPeopleInDB(@RequestParam(value = "name", required = false) String name,
-//                                   @RequestParam(value = "surname", required = false) String surname,
-//                                   @RequestParam(value = "email", required = false) String email,
-//                                   Model model) {
-//
-//        Person person = new Person();
-//
-//        person.setName(name);
-//        person.setSurname(surname);
-//        person.setEmail(email);
-//
-//        model.addAttribute("person", person);
-//
-//        personService.add(name, surname, email);
-//        return "redirect:/people";
-//        return "people/show";
-//    }

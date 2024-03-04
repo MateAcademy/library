@@ -12,6 +12,7 @@ import ua.klunniy.spring.repositories.PeopleRepository;
 //import ua.klunniy.spring.repositories.PeopleRepository;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -83,6 +84,7 @@ public class PeopleService {
     @Transactional
     public void save(Person person) {
         if (person != null) {
+            person.setCreatedAt(new Date());
             //personDao.save(person);
            peopleRepository.save(person);
         }

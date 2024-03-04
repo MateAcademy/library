@@ -14,7 +14,6 @@ import ua.klunniy.spring.service.PeopleService;
 @RequestMapping("/test-batch-update")
 @NoArgsConstructor
 public class BatchController {
-
     private PeopleService peopleService;
 
     @Autowired
