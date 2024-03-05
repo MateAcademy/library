@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 //import javax.transaction.Transactional;
 import ua.klunniy.spring.dao.PeopleDao;
 import ua.klunniy.spring.dao.impl.jdbctemplate.PeopleDAOJDBCTemplateImpl;
+import ua.klunniy.spring.enums.Mood;
 import ua.klunniy.spring.models.Person;
 import ua.klunniy.spring.repositories.PeopleRepository;
 //import ua.klunniy.spring.repositories.PeopleRepository;
@@ -85,6 +86,7 @@ public class PeopleService {
     public void save(Person person) {
         if (person != null) {
             person.setCreatedAt(new Date());
+            person.setMood(Mood.CALM);
             //personDao.save(person);
            peopleRepository.save(person);
         }

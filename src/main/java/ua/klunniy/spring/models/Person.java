@@ -5,6 +5,7 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.proxy.HibernateProxy;
 import org.springframework.format.annotation.DateTimeFormat;
+import ua.klunniy.spring.enums.Mood;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -70,6 +71,10 @@ public class Person {
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     Date createdAt;
+
+    @Enumerated(EnumType.STRING)    //выдает индекс начиная с 0
+    @Column(name = "mood")
+    Mood mood;
 
     @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
     // @Cascade(org.hibernate.annotations.CascadeType.ALL)
